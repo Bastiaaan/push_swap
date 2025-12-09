@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:03:50 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/07 07:21:54 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/09 21:35:25 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,23 @@ t_stack	init_stack(int argc, char *argv[])
 {
 	t_stack		stack;
 	t_element	elem;
-	size_t		i;
+	int			i;
 
-	i = 0;
+	i = 1;
 	stack.id = 65;
 	stack.elements = ft_calloc((argc - 1), sizeof(t_element));
 	while (argv[i])
 	{
 		if (valid_input(argv[i]))
 		{
-			elem.stack = stack;
+			elem.stack = &stack;
+			if (argv[i + 1] != NULL)
+			{
+				elem.next = ft_calloc(1, sizeof(t_element));
+				elem.next->value = ft_atoi(argv[i + 1]);
+			}
 			elem.value = ft_atoi(argv[i]);
-			stack.elements[i] = elem;
+			stack.elements[i - 1] = elem;
 		}
 		i++;
 	}
@@ -67,4 +72,5 @@ int	main(int argc, char *argv[])
 	return (1);
 }
 
-// 47 2 89 16 53 71 8 94 30 61
+// make re && ./push_swap.a 47 5 89 16 53 71 8 94 30 61 -- normal test
+// make debug && gdb ./push_swap.a 47 5 89 16 53 71 8 94 30 61 -- debug test with gdb

@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 04:48:32 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/07 09:58:56 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/09 17:07:14 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,18 @@ void	swap(t_stack *stack)
 	(*stack).elements[2] = tmp;
 }
 
-t_stack	push(t_stack *dest, t_stack *src)
+void	push(t_stack *dest, t_stack *src)
 {
-	size_t	start;
-	t_stack	new;
+	static int	destpos;
 
-	start = 1;
-	new.id = (*src).id;
-	new.elements = ft_calloc((calc_stack_size(*src) - 1), sizeof(t_element));
-	dest->elements = ft_calloc((calc_stack_size(*dest) + 1), sizeof(t_element));
 	if ((*src).elements[1].value != 0)
 	{
-		(*dest).elements[1].stack.id = (*src).id;
 		if ((*dest).elements[1].value == 0)
-			(*dest).elements[1].value = (*src).elements[1].value;
-		else
-			reindex_stack(dest, (*src).elements[1].value);
-		while ((*src).elements[start + 1].value != 0)
 		{
-			new.elements[start] = (*src).elements[start + 1];
-			start++;
+			destpos = 1;
+			(*dest).elements[1].value = (*src).elements[1].value;
 		}
-		free_stack(src);
 	}
-	return (new);
 }
 
 void	rotate(t_stack *stack)
@@ -75,14 +63,12 @@ void	push_swap(t_stack stack)
 	t_stack	stack_b;
 
 	stack_b.id = 66;
+	stack_b.elements = ft_calloc(calc_stack_size(stack), sizeof(t_element));
 	i = 1;
-	stack = push(&stack_b, &stack);
-	stack = push(&stack_b, &stack);
-	stack = push(&stack_b, &stack);
 	ft_printf("Stack A;\t\tStack B;\n");
 	while (stack.elements[i].value != 0)
 	{
-		ft_printf("%d\t\t\t", stack.elements[i].value);
+		ft_printf("next: %d\t\t\t", stack.elements[i].next->value);
 		if (stack_b.elements[i].value > 0)
 			ft_printf("%d", stack_b.elements[i].value);
 		else

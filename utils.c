@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:32:15 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/07 09:54:28 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/09 16:47:35 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,6 @@ size_t	calc_stack_size(t_stack stack)
 		size++;
 	}
 	return (size);
-}
-
-void	reindex_stack(t_stack *stack, int src)
-{
-	t_element	*tmp;
-	size_t		size;
-
-	size = calc_stack_size(*stack);
-	tmp = ft_calloc(size + 1, sizeof(t_element));
-	while (size > 0)
-	{
-		tmp[size + 1] = (*stack).elements[size];
-		size--;
-	}
-	tmp[size + 1].stack = (*stack);
-	tmp[size + 1].value = src;
-	(*stack).elements = tmp;
-	free(tmp);
 }
 
 int	isdone(t_stack stack)

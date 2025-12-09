@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/07 09:53:57 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/09 16:44:20 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ typedef struct s_stack
 
 typedef struct s_element
 {
-	int		value;
-	t_stack	stack;	
+	int			value;
+	t_stack		*stack;
+	t_element	*next;
 }	t_element;
 
 // ============= Functions =============
