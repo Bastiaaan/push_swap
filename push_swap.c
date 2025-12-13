@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 04:48:32 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/07 09:58:56 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/13 05:54:22 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,82 +14,94 @@
 
 void	swap(t_stack *stack)
 {
-	t_element	tmp;
+	t_element	*tmp;
 
-	tmp = (*stack).elements[1];
-	(*stack).elements[1] = (*stack).elements[2];
-	(*stack).elements[2] = tmp;
+	if (stack->elements[1] != NULL)
+	{
+		tmp = stack->elements[1];
+		stack->elements[1] = stack->elements[0];
+		stack->elements[0] = tmp;
+	}
+	write(1, "s", 1);
 }
 
-t_stack	push(t_stack *dest, t_stack *src)
+void	push(t_stack *dest, t_stack *src)
 {
-	size_t	start;
-	t_stack	new;
+	size_t	src_size;
+	size_t	alloc_dst;
+	size_t	sin;
+	int		din;
 
-	start = 1;
-	new.id = (*src).id;
-	new.elements = ft_calloc((calc_stack_size(*src) - 1), sizeof(t_element));
-	dest->elements = ft_calloc((calc_stack_size(*dest) + 1), sizeof(t_element));
-	if ((*src).elements[1].value != 0)
+	src_size = calc_stack_size(src);
+	alloc_dst = (calc_stack_size(dest) + 1);
+	sin = 0;
+	if (src_size >= 1)
 	{
-		(*dest).elements[1].stack.id = (*src).id;
-		if ((*dest).elements[1].value == 0)
-			(*dest).elements[1].value = (*src).elements[1].value;
-		else
-			reindex_stack(dest, (*src).elements[1].value);
-		while ((*src).elements[start + 1].value != 0)
+		dest->elements = ft_calloc(alloc_dst, sizeof(t_element *));
+		if (dest->elements[din]->value == NULL)
+			dest->elements[din] = src->elements[sin];
+		while (sin < src_size)
 		{
-			new.elements[start] = (*src).elements[start + 1];
-			start++;
+			if (src->elements[sin + 1])
+				src->elements[sin] = src->elements[sin + 1];
+			sin++;
+			if (sin == (src_size - 1))
+				src->elements[sin] = NULL;
 		}
-		free_stack(src);
 	}
-	return (new);
+	ft_printf("p%c\n", dest->id + 32);
 }
 
 void	rotate(t_stack *stack)
 {
-	size_t	size;
-	size_t	i;
+	int			i;
+	size_t		size;
+	t_element	*elem;
 
-	size = calc_stack_size(*stack);
-	i = 1;
-	ft_printf("Not implemented yet");
+	i = 0;
+	size = calc_stack_size(stack);
+	elem = ft_calloc(1, sizeof(t_element));
+	elem = stack->elements[i];
+	while (i < calc_stack_size(stack))
+	{
+		if (stack->elements[i + 1])
+			stack->elements[i] = stack->elements[i + 1];
+		i++;
+		if (i == (calc_stack_size(stack) - 1))
+			stack->elements[i] = elem;
+	}
+	write(1, "r", 1);
 }
 
 
 void	reverse_rotate(t_stack *stack)
 {
-	size_t	size;
-	size_t	i;
+	size_t		i;
+	t_element	*elem;
 
-	size = calc_stack_size(*stack);
-	i = 1;
-	ft_printf("Not implemented yet");
+	i = (calc_stack_size(stack) - 1);
+	elem = ft_calloc(1, sizeof(t_element));
+	elem = stack->elements[i];
+	while (i > 0)
+	{
+		stack->elements[i] = stack->elements[i - 1];
+		i--;
+	}
+	stack->elements[i] = elem;
+	write(1, "rr", 2);
 }
 
 
-void	push_swap(t_stack stack)
+void	push_swap(t_stack *stack)
 {
-	size_t	i;
-	t_stack	stack_b;
+	t_stack	*stackb;
 
-	stack_b.id = 66;
-	i = 1;
-	stack = push(&stack_b, &stack);
-	stack = push(&stack_b, &stack);
-	stack = push(&stack_b, &stack);
-	ft_printf("Stack A;\t\tStack B;\n");
-	while (stack.elements[i].value != 0)
-	{
-		ft_printf("%d\t\t\t", stack.elements[i].value);
-		if (stack_b.elements[i].value > 0)
-			ft_printf("%d", stack_b.elements[i].value);
-		else
-			ft_printf("(zero)");
-		ft_printf("\n");
-		i++;
-	}
+	stackb = ft_calloc(1, sizeof(t_stack));
+	stackb->id = 66;
+	stackb->elements = ft_calloc(calc_stack_size(stack), sizeof(t_element));
+	ft_printf("\nBeginning of push_swap\n\n");
+	display_stack(stack);
+	ft_printf("\n");
 }
 
 // having directions of: sa sb ss pa pb ra rb rr rra rrb rrr 
