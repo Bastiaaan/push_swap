@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 04:48:32 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/13 05:54:22 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/13 07:32:51 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,13 @@ void	push(t_stack *dest, t_stack *src)
 	size_t	src_size;
 	size_t	alloc_dst;
 	size_t	sin;
-	int		din;
 
 	src_size = calc_stack_size(src);
 	alloc_dst = (calc_stack_size(dest) + 1);
-	sin = 0;
 	if (src_size >= 1)
 	{
-		dest->elements = ft_calloc(alloc_dst, sizeof(t_element *));
-		if (dest->elements[din]->value == NULL)
-			dest->elements[din] = src->elements[sin];
-		while (sin < src_size)
-		{
-			if (src->elements[sin + 1])
-				src->elements[sin] = src->elements[sin + 1];
-			sin++;
-			if (sin == (src_size - 1))
-				src->elements[sin] = NULL;
-		}
+		reindex(dest, src->elements[0]);
+		reindex(src, NULL);
 	}
 	ft_printf("p%c\n", dest->id + 32);
 }
@@ -102,6 +91,12 @@ void	push_swap(t_stack *stack)
 	ft_printf("\nBeginning of push_swap\n\n");
 	display_stack(stack);
 	ft_printf("\n");
+	push(stackb, stack);
+	push(stackb, stack);
+	ft_printf("\n");
+	display_stack(stack);
+	ft_printf("\n");
+	display_stack(stackb);
 }
 
 // having directions of: sa sb ss pa pb ra rb rr rra rrb rrr 

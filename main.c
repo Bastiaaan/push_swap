@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:03:50 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/13 06:19:10 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/13 07:25:19 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(int argc, char *argv[])
 
 	if (argc <= 1)
 	{
-		ft_putstr_fd("Couldn't run program without input\n", 1);
+		ft_putstr_fd("Error\n", 1);
 		return (0);
 	}
 	else if (argc == 2 && ft_strchr(argv[1], 32) != NULL)
