@@ -6,7 +6,7 @@
 #    By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/05 02:46:26 by brogaar           #+#    #+#              #
-#    Updated: 2025/12/13 06:11:40 by brogaar          ###   ########.fr        #
+#    Updated: 2025/12/19 06:12:24 by brogaar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,8 @@ LIBFT_DIR = ./libft
 LIBFT  = $(LIBFT_DIR)/libft.a
 
 SRCS   = main.c \
-		 push_swap.c \
-		 utils.c 
+		 src/push_swap.c \
+		 src/utils.c 
 
 OBJS   = $(SRCS:.c=.o)
 

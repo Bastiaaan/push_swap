@@ -6,11 +6,11 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:03:50 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/13 07:25:19 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/19 05:33:21 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "src/push_swap.h"
 
 int	valid_input(const char *arg)
 {
@@ -28,71 +28,72 @@ int	valid_input(const char *arg)
 	return (1);
 }
 
-char	**split_args(char *arg)
+t_list	*handlebigargv(char *argv)
 {
-	char	**argv;
-
-	argv = ft_split(arg, ' ');
-	if (!argv)
-		return (NULL);
-	return (argv);
-}
-
-size_t	argslen(char **splt)
-{
-	size_t	s;
-
-	s = 0;
-	while (splt[s])
-		s++;
-	return (s);
-}
-
-t_stack	*init_stack(int argc, char *argv[])
-{
-	t_stack		*stack;
-	int			i;
+	t_list	*new;
+	t_list	*tmp;
+	int		i;
+	char	**args;
 
 	i = 0;
-	stack = ft_calloc(1, sizeof(t_stack));
-	stack->id = 65;
-	stack->elements = ft_calloc((argc), sizeof(t_element));
-	if (!stack->elements)
+	args = ft_split(argv, ' ');
+	if (!args)
+		return (NULL);
+	new = ft_calloc(1, sizeof(t_list));
+	while (args[i])
+	{
+		if (valid_input(args[i]))
+		{
+			tmp = ft_lstnew((long)ft_atoi(args[i]));
+			ft_lstadd_back(&new, tmp);
+		}
+		i++;
+	}
+	free(args);
+	return (new);
+}
+
+t_list	*handleargv(char *argv[])
+{
+	t_list	*list;
+	t_list	*tmp;
+	int		arg_cast;
+	int		i;
+
+	i = 1;
+	list = ft_calloc(1, sizeof(t_list));
+	if (!list)
 		return (NULL);
 	while (argv[i])
 	{
 		if (valid_input(argv[i]))
 		{
-			stack->elements[i - 1] = ft_calloc(1, sizeof(t_element));
-			stack->elements[i - 1]->value = ft_atoi(argv[i]);
-			stack->elements[i - 1]->stack = stack;
+			arg_cast = ft_atoi(argv[i]);
+			tmp = ft_lstnew((long)arg_cast);
+			ft_lstadd_back(&list, tmp);
 		}
 		i++;
 	}
-	return (stack);
+	list = list->next;
+	return (list);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_stack	*stack;
-	char	**corrected;
+	t_list	*list;
 
 	if (argc <= 1)
 	{
-		ft_putstr_fd("Error\n", 1);
+		ft_printf("Error\n");
 		return (0);
 	}
 	else if (argc == 2 && ft_strchr(argv[1], 32) != NULL)
-	{
-		corrected = split_args(argv[1]);
-		stack = init_stack(argslen(corrected), corrected);
-		free(corrected);
-	}
+		list = handlebigargv(argv[1]);
 	else
-		stack = init_stack((argc), argv);
-	push_swap(stack);
+		list = handleargv(argv);
+	push_swap(list);
 	return (1);
 }
 
 // make re && ./push_swap.a 47 5 89 16 53 71 8 94 30 61 -- normal test
-// make debug && gdb ./push_swap.test 47 5 89 16 53 71 8 94 30 61 -- debug test with gdb
+// make debug && gdb ./push_swap.test 47 5 89 16 53 71 8 94 30 61-- debug test with gdb

@@ -9,6 +9,14 @@ SRC = ft_atoi.c \
 	  ft_isdigit.c \
       ft_isprint.c \
 	  ft_itoa.c \
+	  ft_lstadd_back.c \
+	  ft_lstadd_front.c \
+	  ft_lstclear.c \
+	  ft_lstdelone.c \
+	  ft_lstlast.c \
+	  ft_lstnew.c \
+	  ft_lstpop.c \
+	  ft_lstsize.c \
 	  ft_memchr.c \
 	  ft_memcmp.c \
       ft_memcpy.c \
@@ -35,12 +43,7 @@ SRC = ft_atoi.c \
 	  ft_tolower.c \
 	  ft_toupper.c
 
-SRC_BONUS = ft_lstnew_bonus.c \
-	  		ft_lstadd_front_bonus.c \
-	  		ft_lstsize_bonus.c 
-
 OBJ = $(SRC:.c=.o)
-OBJ_BONUS = $(SRC_BONUS:.c=.o)
 HEADER_FILE = libft.h
 
 CC = cc
@@ -64,11 +67,6 @@ $(NAME): $(OBJ)
 	@echo "$(YELLOW)Compiling ft-files...$(RESET)"
 	@ar rcs $(NAME) $(OBJ)
 	@echo "$(GREEN)Compilation of $(NAME) succeeded.$(RESET)"
-
-bonus: $(OBJ) $(OBJ_BONUS)
-	@echo "$(YELLOW)Compiling bonus ft-files...$(RESET)"
-	@ar rcs $(NAME) $(OBJ) $(OBJ_BONUS)
-	@echo "$(GREEN)Compilation of bonus files successful.$(RESET)"
 
 %.o: %.c $(HEADER_FILE)
 	@echo "$(BLUE)Compiling: $<$(RESET)"

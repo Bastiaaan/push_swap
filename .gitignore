@@ -1,0 +1,6 @@
+*.o
+libft/*.o
+ft_printf/*.o
+push_swap.a
+push_swap.o
+push_swap.test

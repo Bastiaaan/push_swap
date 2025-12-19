@@ -16,9 +16,6 @@ OBJ := $(SRC:.c=.o)
 CC := cc
 CC_FLAGS := -Wall -Werror -Wextra
 
-CC_DEBUG = gcc
-CC_DEBUG_FLAG = -g -Wall -Wextra
-
 #Color declaration below;
 BLUE := \033[0;34m
 GREEN := \033[0,32m
@@ -36,9 +33,6 @@ $(NAME): $(OBJ) $(LIBFT)
 %.o: %.c $(HEADER_FILE)
 	@echo "$(BLUE)Compiling: $<$(RESET)"
 	@$(CC) $(CC_FLAGS) -c $< -o $@
-
-debug: $(NAME)
-	$(NAME): $(OBJ) $(LIBFT)
 
 $(LIBFT): 
 	$(MAKE) -C $(LIBFT_DIR)
