@@ -12,11 +12,13 @@ SRC = ft_atoi.c \
 	  ft_lstadd_back.c \
 	  ft_lstadd_front.c \
 	  ft_lstclear.c \
+	  ft_lstcontains.c \
 	  ft_lstdelone.c \
 	  ft_lstlast.c \
 	  ft_lstnew.c \
 	  ft_lstpop.c \
 	  ft_lstsize.c \
+	  ft_lstunique.c \
 	  ft_memchr.c \
 	  ft_memcmp.c \
       ft_memcpy.c \

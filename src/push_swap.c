@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 04:48:32 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/19 10:16:18 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/23 20:16:31 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,34 @@
 
 void	swap(t_list **list)
 {
-	t_list	*fst;
-	t_list	*snd;
+	t_list	*lst;
+	t_list	*frst;
+	t_list	*scnd;
 
-	fst = *list;
-	*list = fst->next;
-	snd = *list;
-	*list = snd->next;
-	ft_lstadd_front(list, fst);
-	ft_lstadd_front(list, snd);
+	lst = *list;
+	frst = lst;
+	scnd = lst->next;
+	lst = lst->next->next;
+	scnd->next = frst;
+	frst->next = lst;
+	*list = scnd;
 }
 
 void	push(t_list **dest, t_list **src)
 {
 	t_list	*destlst;
 	t_list	*srclst;
-	t_list	*first;
+	t_list	*firstsrc;
 
 	destlst = *dest;
 	srclst = *src;
-	first = srclst;
+	firstsrc = srclst;
 	*src = srclst->next;
-	destlst = first;
-	if (ft_lstsize(*dest) > 1)
-		ft_lstadd_front(&destlst, first);
+	firstsrc->next = NULL;
+	if (destlst->content != NULL)
+		ft_lstadd_front(&destlst, firstsrc);
 	else
-		destlst->next = NULL;
+		destlst = firstsrc;
 	*dest = destlst;
 }
 
@@ -77,19 +79,3 @@ void	rev_rotate(t_list **list)
 	last->next = lst;
 	*list = last;
 }
-
-void	push_swap(t_list *list_a)
-{
-	t_list	*list_b;
-	size_t	capacity;
-
-	capacity = ft_lstsize(list_a);
-	list_b = ft_calloc(capacity, sizeof(t_list));
-	push(&list_b, &list_a);
-	ft_printf("\nDisplaying about stack A\n\n");
-	display_list(list_a);
-	ft_printf("\nDisplaying about stack B\n\n");
-	display_list(list_b);
-}
-
-// having directions of: sa sb ss pa pb ra rb rr rra rrb rrr 

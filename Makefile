@@ -6,7 +6,7 @@
 #    By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/05 02:46:26 by brogaar           #+#    #+#              #
-#    Updated: 2025/12/19 06:12:24 by brogaar          ###   ########.fr        #
+#    Updated: 2025/12/24 08:19:57 by brogaar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,12 @@ LIBFT  = $(LIBFT_DIR)/libft.a
 
 SRCS   = main.c \
 		 src/push_swap.c \
-		 src/utils.c 
+		 src/utils.c \
+		 src/algorithm.c \
+		 src/actions_a.c \
+		 src/actions_b.c \
+		 src/actions_dd.c \
+		 src/sorting_utils.c
 
 OBJS   = $(SRCS:.c=.o)
 

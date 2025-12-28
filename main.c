@@ -6,11 +6,23 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:03:50 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/19 05:33:21 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/24 13:39:02 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "src/push_swap.h"
+
+void	assign_list(char id, t_list *list)
+{
+	t_list	*lst;
+
+	lst = list;
+	while (lst)
+	{
+		lst->id = id;
+		lst = lst->next;
+	}
+}
 
 int	valid_input(const char *arg)
 {
@@ -50,6 +62,7 @@ t_list	*handlebigargv(char *argv)
 		i++;
 	}
 	free(args);
+	assign_list(65, new);
 	return (new);
 }
 
@@ -75,12 +88,14 @@ t_list	*handleargv(char *argv[])
 		i++;
 	}
 	list = list->next;
+	assign_list(65, list);
 	return (list);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_list	*list;
+	t_list	*list_a;
+	t_list	*list_b;
 
 	if (argc <= 1)
 	{
@@ -88,12 +103,15 @@ int	main(int argc, char *argv[])
 		return (0);
 	}
 	else if (argc == 2 && ft_strchr(argv[1], 32) != NULL)
-		list = handlebigargv(argv[1]);
+		list_a = handlebigargv(argv[1]);
 	else
-		list = handleargv(argv);
-	push_swap(list);
+		list_a = handleargv(argv);
+	list_b = ft_calloc(ft_lstsize(list_a), sizeof(t_list));
+	if (!list_b)
+		return (0);
+	run(list_a, list_b);
 	return (1);
 }
-
-// make re && ./push_swap.a 47 5 89 16 53 71 8 94 30 61 -- normal test
+// testing already sorted list: 4 5 234 310 400 673 824
+// make re && ./push_swap.a 472 19 8304 56 901 7 263 10458 88 3421 -- normal test
 // make debug && gdb ./push_swap.test 47 5 89 16 53 71 8 94 30 61-- debug test with gdb
