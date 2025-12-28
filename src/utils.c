@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:32:15 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/27 16:49:07 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/28 14:17:53 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	display_list(t_list *list)
 	ft_printf("========== Displaying list ==========\n");
 	while (lst)
 	{
-		ft_printf("%d\n", (int)lst->content);
+		ft_printf("%u\n", lst->content);
 		lst = lst->next;
 	}
 	ft_printf("=====================================\n");

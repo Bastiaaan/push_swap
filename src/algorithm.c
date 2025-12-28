@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/27 18:05:15 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/28 16:07:25 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,25 @@
 char	*define_action(t_list *a, t_list *b)
 {
 	char	*move;
-	
+
 	if (ft_lstsize(a) > 1)
 	{
-		if (a->content < a->next->content && a->content < ft_lstlast(a)->content)
-			move = ft_strdup("pb");
-		if (a->content > a->next->content && a->next->content < ft_lstlast(a)->content)
+		if (a->content < a->next->content
+			&& a->content < ft_lstlast(a)->content)
+		{
+			if ((a->content > b->content) || exceed_smallest(b, a))
+				move = ft_strdup("pb");
+			else
+				move = ft_strdup("rrb");
+		}
+		if (a->next->content < a->content
+			&& a->content < ft_lstlast(a)->content)
 			move = ft_strdup("sa");
-		if (a->content > ft_lstlast(a)->content && a->next->content > ft_lstlast(a)->content)
+		if (a->content > ft_lstlast(a)->content
+			&& a->next->content > ft_lstlast(a)->content)
 			move = ft_strdup("rra");
-		if (a->content > a->next->content && a->content > ft_lstlast(a)->content)
+		if (a->content > a->next->content
+			&& a->content > ft_lstlast(a)->content)
 			move = ft_strdup("ra");
 	}
 	if (!move)
@@ -38,15 +47,19 @@ char	*define_action_undetermined(t_list *a, t_list *b)
 
 	if (ft_lstsize(b) > 0)
 	{
-		if (b->content > b->next->content && b->content > ft_lstlast(b) && b->content < a->content)
+		if (b->content > b->next->content && b->content > ft_lstlast(b)
+			&& b->content < a->content)
 			move = ft_strdup("pa");
 		else if (b->content > a->content)
 			move = ft_strdup("ra");
-		if (b->content < ft_lstlast(b)->content && b->next->content > ft_lstlast(b)->content)
+		if (b->content < ft_lstlast(b)->content
+			&& b->next->content > ft_lstlast(b)->content)
 			move = ft_strdup("rb");
-		if (b->content < ft_lstlast(b)->content && ft_lstlast(b)->content > b->next->content)
+		if (b->content < ft_lstlast(b)->content
+			&& ft_lstlast(b)->content > b->next->content)
 			move = ft_strdup("rrb");
-		if (b->content < b->next->content && ft_lstlast(b)->content < b->next->content)
+		if (b->content < b->next->content
+			&& ft_lstlast(b)->content < b->next->content)
 			move = ft_strdup("sb");
 	}
 	return (move);
@@ -78,35 +91,6 @@ void	exec_action(char *action, t_list **a, t_list **b)
 			sb(b);
 		if (ft_strncmp(action, "ss", ft_strlen(action)) == 0)
 			ss(a, b);
-	}
-}
-
-void	run(t_list *a, t_list *b)
-{
-	unsigned int	moves;
-	unsigned int	limit;
-	unsigned int	lstsize;
-	char			*action;
-
-	limit = 25;
-	moves = 0;
-	lstsize = ft_lstsize(a);
-	while (limit > 0 && !sort_complete(a, lstsize))
-	{
-		action = define_action(a, b);
-		exec_action(action, &a, &b);
-		moves++;
-		limit--;
-		free(action);
-	}
-	if (sort_complete(a, lstsize))
-		ft_printf("\n===== Sorting complete =====\n\n===== Moves detected: %u\n\n", moves);
-	else
-	{
-		ft_printf("\nStack #A\n\n");
-		display_list(a);
-		ft_printf("Stack #B\n\n");
-		display_list(b);
 	}
 }
 

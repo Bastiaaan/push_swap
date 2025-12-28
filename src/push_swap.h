@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/27 16:51:19 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/28 16:01:25 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void			ss(t_list **list_a, t_list **list_b);
 
 void			assign_list(char id, t_list *list);
 void			display_list(t_list *list);
+int				exceed_largest(t_list *list, t_list *item);
+int				exceed_smallest(t_list *list, t_list *item);
 int				sort_complete(t_list *list, unsigned int original_size);
 unsigned int	times_greater(t_list *list);
 unsigned int	times_smaller(t_list *list);

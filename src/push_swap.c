@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 04:48:32 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/23 20:16:31 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/28 15:04:54 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,33 @@ void	rev_rotate(t_list **list)
 	second_last->next = NULL;
 	last->next = lst;
 	*list = last;
+}
+
+void	run(t_list *a, t_list *b)
+{
+	unsigned int	moves;
+	unsigned int	limit;
+	unsigned int	lstsize;
+	char			*action;
+
+	limit = 25;
+	moves = 0;
+	lstsize = ft_lstsize(a);
+	while (limit > 0 && !sort_complete(a, lstsize))
+	{
+		action = define_action(a, b);
+		exec_action(action, &a, &b);
+		moves++;
+		limit--;
+		free(action);
+	}
+	if (sort_complete(a, lstsize))
+		ft_printf("\n===== Sorting complete =====\n\n===== Moves detected: %u\n\n", moves);
+	else
+	{
+		ft_printf("\nStack #A\n\n");
+		display_list(a);
+		ft_printf("Stack #B\n\n");
+		display_list(b);
+	}
 }
