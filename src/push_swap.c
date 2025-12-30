@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 04:48:32 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/28 15:04:54 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/30 08:36:44 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	run(t_list *a, t_list *b)
 	char			*action;
 
 	limit = 25;
-	moves = 0;
 	lstsize = ft_lstsize(a);
 	while (limit > 0 && !sort_complete(a, lstsize))
 	{

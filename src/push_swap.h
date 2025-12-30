@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/28 16:01:25 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/30 07:40:26 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@
 // =========== Sort algorithm ============
 
 char			*define_action(t_list *a, t_list *b);
-char			*define_action_undetermined(t_list *a, t_list *b);
+char			*define_action_undetermined1(t_list *a, t_list *b);
+char			*define_action_undetermined2(t_list *a, t_list *b);
+char			*define_action_undetermined3(t_list *a, t_list *b);
 int				ascending(t_list *list);
 int				descending(t_list *list);
 void			exec_action(char *action, t_list **a, t_list **b);
+int				valid_action(char *move);
 void			run(t_list *a, t_list *b);
 
 // ========= Push-swap Functions =========

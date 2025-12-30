@@ -6,62 +6,107 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/28 16:07:25 by brogaar          ###   ########.fr       */
+/*   Updated: 2025/12/30 15:05:04 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+// this function defines the fundamental moves of stack A. 
 char	*define_action(t_list *a, t_list *b)
 {
 	char	*move;
 
-	if (ft_lstsize(a) > 1)
+	move = '\0';
+	if (ft_lstsize(a) >= 2 && ft_lstsize(b) >= 2)
 	{
-		if (a->content < a->next->content
-			&& a->content < ft_lstlast(a)->content)
-		{
-			if ((a->content > b->content) || exceed_smallest(b, a))
-				move = ft_strdup("pb");
-			else
-				move = ft_strdup("rrb");
-		}
-		if (a->next->content < a->content
-			&& a->content < ft_lstlast(a)->content)
-			move = ft_strdup("sa");
+		if (ft_lstlast(a)->content < a->content
+			&& ft_lstlast(a)->content < a->next->content
+			&& ft_lstlast(b)->content > b->content
+			&& ft_lstlast(b)->content > b->next->content)
+			move = ft_strdup("rrr");
 		if (a->content > ft_lstlast(a)->content
-			&& a->next->content > ft_lstlast(a)->content)
-			move = ft_strdup("rra");
-		if (a->content > a->next->content
-			&& a->content > ft_lstlast(a)->content)
-			move = ft_strdup("ra");
+			&& a->next->content < ft_lstlast(a)->content
+			&& b->content < ft_lstlast(b)->content
+			&& b->next->content > ft_lstlast(b)->content)
+			move = ft_strdup("rr");
+		if (a->next->content < a->content
+			&& a->content < ft_lstlast(a)->content
+			&& b->next->content > b->content
+			&& b->content > ft_lstlast(b)->content)
+			move = ft_strdup("ss");
 	}
 	if (!move)
-		move = define_action_undetermined(a, b);
+		move = define_action_undetermined1(a, b);
 	return (move);
 }
 
-char	*define_action_undetermined(t_list *a, t_list *b)
+// here whenever stack A is ready to push to stack B, 
+char	*define_action_undetermined1(t_list *a, t_list *b)
 {
 	char	*move;
 
-	if (ft_lstsize(b) > 0)
+	move = '\0';
+	if (ft_lstsize(a) >= 2 && !ascending(a))
 	{
-		if (b->content > b->next->content && b->content > ft_lstlast(b)
-			&& b->content < a->content)
-			move = ft_strdup("pa");
-		else if (b->content > a->content)
+		if (a->content > ft_lstlast(a)->content
+			&& a->next->content < ft_lstlast(a)->content)
 			move = ft_strdup("ra");
+		if (ft_lstlast(a)->content < a->content
+			&& ft_lstlast(a)->content < a->next->content)
+			move = ft_strdup("rra");
+		if (a->next->content < a->content
+			&& a->content < ft_lstlast(a)->content)
+			move = ft_strdup("sa");
+	}
+	if (ascending(a) && b->content < a->content
+		&& ft_lstsize(b) >= 1 && descending(b))
+		move = ft_strdup("pa");
+	if (!move)
+		move = define_action_undetermined2(a, b);
+	return (move);
+}
+
+char	*define_action_undetermined2(t_list *a, t_list *b)
+{
+	char	*move;
+
+	move = '\0';
+	if (ft_lstsize(a) >= 1 && a->content < a->next->content
+		&& a->content < ft_lstlast(a)->content)
+	{
+		if (a->content < b->content)
+			move = ft_strdup("rrb");
+		else if (ft_lstsize(b) < 3 || a->content > b->content && descending(b))
+			move = ft_strdup("pb");
+		if (!descending(b) && a->content > b->content
+			&& a->content < ft_lstlast(b)->content)
+			ft_printf("");
+	}
+	if (!move)
+		move = define_action_undetermined3(a, b);
+	return (move);
+}
+
+char	*define_action_undetermined3(t_list *a, t_list *b)
+{
+	char	*move;
+
+	move = '\0';
+	if (ft_lstsize(b) >= 2 && !descending(b))
+	{
 		if (b->content < ft_lstlast(b)->content
-			&& b->next->content > ft_lstlast(b)->content)
+			&& b->next->content < ft_lstlast(b)->content)
 			move = ft_strdup("rb");
-		if (b->content < ft_lstlast(b)->content
+		if (ft_lstlast(b)->content > b->content
 			&& ft_lstlast(b)->content > b->next->content)
 			move = ft_strdup("rrb");
-		if (b->content < b->next->content
-			&& ft_lstlast(b)->content < b->next->content)
+		if (b->next->content > b->content
+			&& b->content > ft_lstlast(b)->content)
 			move = ft_strdup("sb");
 	}
+	if (!move)
+		move = define_action(a, b);
 	return (move);
 }
 
