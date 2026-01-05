@@ -49,7 +49,7 @@ OBJ = $(SRC:.c=.o)
 HEADER_FILE = libft.h
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 CC_DEBUG = gcc
 CC_DEBUG_FLAG = -g -Wall -Wextra

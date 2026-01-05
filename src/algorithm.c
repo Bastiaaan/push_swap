@@ -6,136 +6,119 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/30 15:05:04 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/05 08:54:20 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 // this function defines the fundamental moves of stack A. 
-char	*define_action(t_list *a, t_list *b)
+void	sort_list(t_list *a, t_list *b, size_t size)
 {
-	char	*move;
-
-	move = '\0';
 	if (ft_lstsize(a) >= 2 && ft_lstsize(b) >= 2)
 	{
-		if (ft_lstlast(a)->content < a->content
-			&& ft_lstlast(a)->content < a->next->content
-			&& ft_lstlast(b)->content > b->content
-			&& ft_lstlast(b)->content > b->next->content)
-			move = ft_strdup("rrr");
-		if (a->content > ft_lstlast(a)->content
-			&& a->next->content < ft_lstlast(a)->content
-			&& b->content < ft_lstlast(b)->content
-			&& b->next->content > ft_lstlast(b)->content)
-			move = ft_strdup("rr");
-		if (a->next->content < a->content
-			&& a->content < ft_lstlast(a)->content
-			&& b->next->content > b->content
-			&& b->content > ft_lstlast(b)->content)
-			move = ft_strdup("ss");
+		if ((ft_lstlast(a)->content < a->content
+				&& ft_lstlast(a)->content < a->next->content)
+			&& (ft_lstlast(b)->content > b->content
+				&& ft_lstlast(b)->content > b->next->content))
+			rrr(&a, &b);
+		if ((a->content > ft_lstlast(a)->content
+				&& a->next->content < ft_lstlast(a)->content)
+			&& (b->content < ft_lstlast(b)->content
+				&& b->next->content > ft_lstlast(b)->content))
+			rr(&a, &b);
+		if ((a->next->content < a->content
+				&& a->content < ft_lstlast(a)->content)
+			&& (b->next->content > b->content
+				&& b->content < ft_lstlast(b)->content)
+			|| (ft_lstsize(b) == 2 && b->content < b->next->content))
+			ss(&a, &b);
 	}
-	if (!move)
-		move = define_action_undetermined1(a, b);
-	return (move);
+	if (!sort_complete(a, size))
+		sort_a(a, b, size);
 }
 
 // here whenever stack A is ready to push to stack B, 
-char	*define_action_undetermined1(t_list *a, t_list *b)
+void	sort_a(t_list *a, t_list *b, size_t size)
 {
-	char	*move;
-
-	move = '\0';
 	if (ft_lstsize(a) >= 2 && !ascending(a))
 	{
 		if (a->content > ft_lstlast(a)->content
 			&& a->next->content < ft_lstlast(a)->content)
-			move = ft_strdup("ra");
+			ra(&a);
 		if (ft_lstlast(a)->content < a->content
 			&& ft_lstlast(a)->content < a->next->content)
-			move = ft_strdup("rra");
+			rra(&a);
 		if (a->next->content < a->content
 			&& a->content < ft_lstlast(a)->content)
-			move = ft_strdup("sa");
+			sa(&a);
 	}
-	if (ascending(a) && b->content < a->content
-		&& ft_lstsize(b) >= 1 && descending(b))
-		move = ft_strdup("pa");
-	if (!move)
-		move = define_action_undetermined2(a, b);
-	return (move);
+	if (ascending(a) && !sort_complete(a, size))
+		finalize(a, b, size);
+	if (!sort_complete(a, size))
+		sort_b(a, b, size);
 }
 
-char	*define_action_undetermined2(t_list *a, t_list *b)
+void	sort_b(t_list *a, t_list *b, size_t size)
 {
-	char	*move;
-
-	move = '\0';
 	if (ft_lstsize(a) >= 1 && a->content < a->next->content
-		&& a->content < ft_lstlast(a)->content)
+		&& a->content < ft_lstlast(a)->content && !ascending(a))
 	{
-		if (a->content < b->content)
-			move = ft_strdup("rrb");
-		else if (ft_lstsize(b) < 3 || a->content > b->content && descending(b))
-			move = ft_strdup("pb");
-		if (!descending(b) && a->content > b->content
-			&& a->content < ft_lstlast(b)->content)
-			ft_printf("");
+		if (ft_lstsize(b) > 2)
+		{
+			if (a->content < b->content && a->content > ft_lstlast(b)->content)
+				rrb(&b);
+			else if (a->content > b->content
+				&& a->content > ft_lstlast(b)->content
+				&& b->content < ft_lstlast(b)->content)
+				rb(&b);
+		}
+		else if (ft_lstsize(b) == 2 && b->content > b->next->content)
+			sb(&b);
+		if (a->content > b->content && a->content < ft_lstlast(b)->content
+			|| ft_lstsize(b) <= 2 || descending(b) && exceed_smallest(b, a)
+			|| exceed_largest(b, a))
+			pb(&b, &a);
 	}
-	if (!move)
-		move = define_action_undetermined3(a, b);
-	return (move);
+	if (!sort_complete(a, size))
+		sort_rest(a, b, size);
 }
 
-char	*define_action_undetermined3(t_list *a, t_list *b)
+void	sort_rest(t_list *a, t_list *b, size_t size)
 {
-	char	*move;
-
-	move = '\0';
-	if (ft_lstsize(b) >= 2 && !descending(b))
+	if (ft_lstsize(b) > 2 && !descending(b))
 	{
 		if (b->content < ft_lstlast(b)->content
-			&& b->next->content < ft_lstlast(b)->content)
-			move = ft_strdup("rb");
+			&& b->content < b->next->content)
+			rb(&b);
 		if (ft_lstlast(b)->content > b->content
 			&& ft_lstlast(b)->content > b->next->content)
-			move = ft_strdup("rrb");
+			rrb(&b);
 		if (b->next->content > b->content
 			&& b->content > ft_lstlast(b)->content)
-			move = ft_strdup("sb");
+			sb(&b);
 	}
-	if (!move)
-		move = define_action(a, b);
-	return (move);
+	if (!sort_complete(a, size))
+		sort_list(a, b, size);
 }
 
-void	exec_action(char *action, t_list **a, t_list **b)
+void	finalize(t_list *a, t_list *b, size_t size)
 {
-	if (action != '\0')
+	while (!sort_complete(a, size))
 	{
-		if (ft_strncmp(action, "pa", ft_strlen(action)) == 0)
-			pa(a, b);
-		if (ft_strncmp(action, "pb", ft_strlen(action)) == 0)
-			pb(b, a);
-		if (ft_strncmp(action, "ra", ft_strlen(action)) == 0)
-			ra(a);
-		if (ft_strncmp(action, "rb", ft_strlen(action)) == 0)
-			rb(b);
-		if (ft_strncmp(action, "rr", ft_strlen(action)) == 0)
-			rr(a, b);
-		if (ft_strncmp(action, "rra", ft_strlen(action)) == 0)
-			rra(a);
-		if (ft_strncmp(action, "rrb", ft_strlen(action)) == 0)
-			rrb(b);
-		if (ft_strncmp(action, "rrr", ft_strlen(action)) == 0)
-			rrr(a, b);
-		if (ft_strncmp(action, "sa", ft_strlen(action)) == 0)
-			sa(a);
-		if (ft_strncmp(action, "sb", ft_strlen(action)) == 0)
-			sb(b);
-		if (ft_strncmp(action, "ss", ft_strlen(action)) == 0)
-			ss(a, b);
+		if (b->content != NULL)
+		{
+			if (ft_lstlast(a)->content < a->content
+				&& ft_lstlast(a)->content > b->content)
+				rra(&a);
+			else if (b->content > a->content)
+				ra(&a);
+			else
+				pa(&a, &b);
+		}
+		else
+			if (ft_lstlast(a)->content < a->content)
+				rra(&a);
 	}
 }
 

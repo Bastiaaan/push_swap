@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/30 07:40:26 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/05 06:18:32 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@
 
 // =========== Sort algorithm ============
 
-char			*define_action(t_list *a, t_list *b);
-char			*define_action_undetermined1(t_list *a, t_list *b);
-char			*define_action_undetermined2(t_list *a, t_list *b);
-char			*define_action_undetermined3(t_list *a, t_list *b);
+void			sort_list(t_list *a, t_list *b, size_t size);
+void			sort_a(t_list *a, t_list *b, size_t size);
+void			sort_b(t_list *a, t_list *b, size_t size);
+void			sort_rest(t_list *a, t_list *b, size_t size);
+void			finalize(t_list *a, t_list *b, size_t size);
 int				ascending(t_list *list);
 int				descending(t_list *list);
-void			exec_action(char *action, t_list **a, t_list **b);
-int				valid_action(char *move);
 void			run(t_list *a, t_list *b);
 
 // ========= Push-swap Functions =========
@@ -58,7 +57,7 @@ void			assign_list(char id, t_list *list);
 void			display_list(t_list *list);
 int				exceed_largest(t_list *list, t_list *item);
 int				exceed_smallest(t_list *list, t_list *item);
-int				sort_complete(t_list *list, unsigned int original_size);
+int				sort_complete(t_list *list, size_t original_size);
 unsigned int	times_greater(t_list *list);
 unsigned int	times_smaller(t_list *list);
 void			free_list(t_list **list);

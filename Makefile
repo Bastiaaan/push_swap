@@ -6,7 +6,7 @@
 #    By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/05 02:46:26 by brogaar           #+#    #+#              #
-#    Updated: 2025/12/24 08:19:57 by brogaar          ###   ########.fr        #
+#    Updated: 2026/01/04 20:37:43 by brogaar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME   = push_swap.a
 DEBUG_NAME = push_swap.test
 
 CC     = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 CC_DEBUG = gcc
 CC_DEBUG_FLAG = -g -Wall -Wextra

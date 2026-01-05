@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:32:15 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/28 14:17:53 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/04 19:34:23 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_list(t_list **list)
 	}
 }
 
-int	sort_complete(t_list *list, unsigned int original_size)
+int	sort_complete(t_list *list, size_t original_size)
 {
 	t_list			*lst;
 	unsigned int	in;

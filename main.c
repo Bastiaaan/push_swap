@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:03:50 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/24 13:39:02 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/05 08:36:56 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,5 @@ int	main(int argc, char *argv[])
 	return (1);
 }
 // testing already sorted list: 4 5 234 310 400 673 824
-// make re && ./push_swap.a 472 19 8304 56 901 7 263 10458 88 3421 -- normal test
-// make debug && gdb ./push_swap.test 47 5 89 16 53 71 8 94 30 61-- debug test with gdb
+// make re && ./push_swap.a 30992 25177 1657 1058 1988 2295 36301 43687 3839 918 28412 -- normal test
+// make debug && gdb ./push_swap.test -- debug test with gdb47 5 89 16 53 71 8 94 30 61

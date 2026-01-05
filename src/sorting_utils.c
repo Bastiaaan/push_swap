@@ -6,30 +6,11 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 14:00:33 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/30 14:36:58 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/04 19:40:02 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	valid_action(char *move)
-{
-	if (!move || move == '\0')
-		return (0);
-	return (
-		ft_strncmp(move, "ra", 2) == 0
-		|| ft_strncmp(move, "rra", 3) == 0
-		|| ft_strncmp(move, "pa", 2) == 0
-		|| ft_strncmp(move, "sa", 2) == 0
-		|| ft_strncmp(move, "rb", 2) == 0
-		|| ft_strncmp(move, "rrb", 3) == 0
-		|| ft_strncmp(move, "pb", 2) == 0
-		|| ft_strncmp(move, "sb", 2) == 0
-		|| ft_strncmp(move, "rr", 2) == 0
-		|| ft_strncmp(move, "rrr", 3) == 0
-		|| ft_strncmp(move, "ss", 2) == 0
-	);
-}
 
 int	ascending(t_list *list)
 {
