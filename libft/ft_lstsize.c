@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 23:33:15 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/22 13:39:31 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/06 15:45:10 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_lstsize(t_list *lst)
 
 	i = 0;
 	node = lst;
-	if (!lst->content)
+	if (!node)
 		return (i);
 	while (node)
 	{

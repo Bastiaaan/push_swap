@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:03:50 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/05 08:36:56 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/06 15:37:10 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int	main(int argc, char *argv[])
 	if (!list_b)
 		return (0);
 	run(list_a, list_b);
+	free_list(&list_a);
+	free_list(&list_b);
 	return (1);
 }
 // testing already sorted list: 4 5 234 310 400 673 824

@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:32:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/04 19:34:23 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/06 16:53:03 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ unsigned int	times_smaller(t_list *list)
 	t_list			*lst;
 
 	lst = list;
+	amount = 0;
 	while (lst)
 	{
-		if (lst->content < lst->next->content)
+		if (lst->next != NULL
+			&& lst->content < lst->next->content)
 			amount++;
 		else
 			return (amount);
@@ -66,9 +68,11 @@ unsigned int	times_greater(t_list *list)
 	t_list			*lst;
 
 	lst = list;
+	amount = 0;
 	while (lst)
 	{
-		if (lst->content > lst->next->content)
+		if (lst->next != NULL
+			&& lst->content > lst->next->content)
 			amount++;
 		else
 			return (amount);

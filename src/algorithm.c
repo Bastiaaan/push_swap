@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/05 08:54:20 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/06 18:11:43 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,8 @@ void	sort_list(t_list *a, t_list *b, size_t size)
 			&& (b->content < ft_lstlast(b)->content
 				&& b->next->content > ft_lstlast(b)->content))
 			rr(&a, &b);
-		if ((a->next->content < a->content
-				&& a->content < ft_lstlast(a)->content)
-			&& (b->next->content > b->content
-				&& b->content < ft_lstlast(b)->content)
-			|| (ft_lstsize(b) == 2 && b->content < b->next->content))
+		if ((a->content > a->next->content)
+			&& (b->next->content > b->content))
 			ss(&a, &b);
 	}
 	if (!sort_complete(a, size))
@@ -54,27 +51,24 @@ void	sort_a(t_list *a, t_list *b, size_t size)
 			sa(&a);
 	}
 	if (ascending(a) && !sort_complete(a, size))
+	{
 		finalize(a, b, size);
+		return;
+	}
 	if (!sort_complete(a, size))
 		sort_b(a, b, size);
 }
 
 void	sort_b(t_list *a, t_list *b, size_t size)
-{
+{	
 	if (ft_lstsize(a) >= 1 && a->content < a->next->content
 		&& a->content < ft_lstlast(a)->content && !ascending(a))
 	{
-		if (ft_lstsize(b) > 2)
+		if (ft_lstsize(a) >= 3 && a->content < b->content)
 		{
-			if (a->content < b->content && a->content > ft_lstlast(b)->content)
-				rrb(&b);
-			else if (a->content > b->content
-				&& a->content > ft_lstlast(b)->content
-				&& b->content < ft_lstlast(b)->content)
-				rb(&b);
+			// todo: find correct rotation before executing pb()
 		}
-		else if (ft_lstsize(b) == 2 && b->content > b->next->content)
-			sb(&b);
+		}
 		if (a->content > b->content && a->content < ft_lstlast(b)->content
 			|| ft_lstsize(b) <= 2 || descending(b) && exceed_smallest(b, a)
 			|| exceed_largest(b, a))
@@ -86,10 +80,11 @@ void	sort_b(t_list *a, t_list *b, size_t size)
 
 void	sort_rest(t_list *a, t_list *b, size_t size)
 {
-	if (ft_lstsize(b) > 2 && !descending(b))
+	while (!descending(b))
 	{
-		if (b->content < ft_lstlast(b)->content
-			&& b->content < b->next->content)
+		if ((b->content < ft_lstlast(b)->content)
+			&& (b->content > b->next->content)
+			|| exceed_smallest(b, b))
 			rb(&b);
 		if (ft_lstlast(b)->content > b->content
 			&& ft_lstlast(b)->content > b->next->content)
@@ -106,7 +101,7 @@ void	finalize(t_list *a, t_list *b, size_t size)
 {
 	while (!sort_complete(a, size))
 	{
-		if (b->content != NULL)
+		if (ft_lstsize(b) >= 1)
 		{
 			if (ft_lstlast(a)->content < a->content
 				&& ft_lstlast(a)->content > b->content)
@@ -117,7 +112,8 @@ void	finalize(t_list *a, t_list *b, size_t size)
 				pa(&a, &b);
 		}
 		else
-			if (ft_lstlast(a)->content < a->content)
+			if (ft_lstlast(a)->content < a->content
+				|| exceed_smallest(a, ft_lstlast(a)))
 				rra(&a);
 	}
 }
