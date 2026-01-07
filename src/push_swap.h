@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/05 06:18:32 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/07 02:14:30 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 void			sort_list(t_list *a, t_list *b, size_t size);
 void			sort_a(t_list *a, t_list *b, size_t size);
 void			sort_b(t_list *a, t_list *b, size_t size);
-void			sort_rest(t_list *a, t_list *b, size_t size);
 void			finalize(t_list *a, t_list *b, size_t size);
 int				ascending(t_list *list);
 int				descending(t_list *list);
@@ -58,8 +57,8 @@ void			display_list(t_list *list);
 int				exceed_largest(t_list *list, t_list *item);
 int				exceed_smallest(t_list *list, t_list *item);
 int				sort_complete(t_list *list, size_t original_size);
-unsigned int	times_greater(t_list *list);
-unsigned int	times_smaller(t_list *list);
+int				short_direction_asc(t_list *list, t_list *item);
+int				short_direction_desc(t_list *list, t_list *item);
 void			free_list(t_list **list);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/06 18:11:43 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/07 04:36:04 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,58 +40,49 @@ void	sort_a(t_list *a, t_list *b, size_t size)
 {
 	if (ft_lstsize(a) >= 2 && !ascending(a))
 	{
-		if (a->content > ft_lstlast(a)->content
-			&& a->next->content < ft_lstlast(a)->content)
-			ra(&a);
 		if (ft_lstlast(a)->content < a->content
 			&& ft_lstlast(a)->content < a->next->content)
 			rra(&a);
-		if (a->next->content < a->content
+		else if (a->content > a->next->content
+			&& a->content > ft_lstlast(a)->content)
+			ra(&a);
+		else if (a->next->content < a->content
 			&& a->content < ft_lstlast(a)->content)
 			sa(&a);
 	}
 	if (ascending(a) && !sort_complete(a, size))
 	{
 		finalize(a, b, size);
-		return;
+		return ;
 	}
 	if (!sort_complete(a, size))
 		sort_b(a, b, size);
 }
 
 void	sort_b(t_list *a, t_list *b, size_t size)
-{	
+{
+	int	direction;
+
 	if (ft_lstsize(a) >= 1 && a->content < a->next->content
 		&& a->content < ft_lstlast(a)->content && !ascending(a))
 	{
-		if (ft_lstsize(a) >= 3 && a->content < b->content)
+		if (ft_lstsize(b) >= 3 && a->content < b->content
+			&& !exceed_smallest(b, a))
 		{
-			// todo: find correct rotation before executing pb()
-		}
+			direction = short_direction_desc(b, a);
+			while (a->content < b->content
+				|| a->content > ft_lstlast(b)->content)
+			{
+				if (direction < 0)
+					rrb(&b);
+				else
+					rb(&b);
+			}
 		}
 		if (a->content > b->content && a->content < ft_lstlast(b)->content
-			|| ft_lstsize(b) <= 2 || descending(b) && exceed_smallest(b, a)
+			|| ft_lstsize(b) <= 2 || exceed_smallest(b, a)
 			|| exceed_largest(b, a))
 			pb(&b, &a);
-	}
-	if (!sort_complete(a, size))
-		sort_rest(a, b, size);
-}
-
-void	sort_rest(t_list *a, t_list *b, size_t size)
-{
-	while (!descending(b))
-	{
-		if ((b->content < ft_lstlast(b)->content)
-			&& (b->content > b->next->content)
-			|| exceed_smallest(b, b))
-			rb(&b);
-		if (ft_lstlast(b)->content > b->content
-			&& ft_lstlast(b)->content > b->next->content)
-			rrb(&b);
-		if (b->next->content > b->content
-			&& b->content > ft_lstlast(b)->content)
-			sb(&b);
 	}
 	if (!sort_complete(a, size))
 		sort_list(a, b, size);

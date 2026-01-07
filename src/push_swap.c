@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 04:48:32 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/06 17:36:42 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/07 02:31:40 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	rotate(t_list **list)
 	*list = second;
 }
 
-
 void	rev_rotate(t_list **list)
 {
 	t_list	*lst;
@@ -83,8 +82,7 @@ void	rev_rotate(t_list **list)
 void	run(t_list *a, t_list *b)
 {
 	int				lstsize;
-	
+
 	lstsize = ft_lstsize(a);
 	sort_list(a, b, lstsize);
-	ft_printf("Sort completed\n");
 }

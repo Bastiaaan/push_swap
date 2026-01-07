@@ -6,11 +6,66 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:32:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/06 16:53:03 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/07 02:12:43 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+// returns -1 for rev_rotate and 1 for rotate
+int	short_direction_desc(t_list *list, t_list *item)
+{
+	int		direction;
+	int		matches;
+	t_list	*lst;
+
+	lst = list;
+	direction = 0;
+	matches = 0;
+	while (lst && direction == 0)
+	{
+		if (item->content < lst->next->content)
+		{
+			matches++;
+			lst = lst->next;
+		}
+		else
+		{
+			if (matches >= (int)(ft_lstsize(list) / 2))
+				direction = -1;
+			else
+				direction = 1;
+		}
+	}
+	return (direction);
+}
+
+int	short_direction_asc(t_list *list, t_list *item)
+{
+	int		direction;
+	int		matches;
+	t_list	*lst;
+
+	lst = list;
+	direction = 0;
+	matches = 0;
+	while (lst && direction == 0)
+	{
+		if (item->content > lst->next->content)
+		{
+			matches++;
+			lst = lst->next;
+		}
+		else
+		{
+			if (matches >= (int)(ft_lstsize(list) / 2))
+				direction = -1;
+			else
+				direction = 1;
+		}
+	}
+	return (direction);
+}
 
 void	free_list(t_list **list)
 {
@@ -19,7 +74,6 @@ void	free_list(t_list **list)
 	lst = *list;
 	while (lst)
 	{
-		free(lst);
 		lst = lst->next;
 	}
 }
@@ -41,44 +95,6 @@ int	sort_complete(t_list *list, size_t original_size)
 	if (in < original_size)
 		return (0);
 	return (1);
-}
-
-unsigned int	times_smaller(t_list *list)
-{
-	unsigned int	amount;
-	t_list			*lst;
-
-	lst = list;
-	amount = 0;
-	while (lst)
-	{
-		if (lst->next != NULL
-			&& lst->content < lst->next->content)
-			amount++;
-		else
-			return (amount);
-		lst = lst->next;
-	}
-	return (amount);
-}
-
-unsigned int	times_greater(t_list *list)
-{
-	unsigned int	amount;
-	t_list			*lst;
-
-	lst = list;
-	amount = 0;
-	while (lst)
-	{
-		if (lst->next != NULL
-			&& lst->content > lst->next->content)
-			amount++;
-		else
-			return (amount);
-		lst = lst->next;
-	}
-	return (amount);
 }
 
 void	display_list(t_list *list)
