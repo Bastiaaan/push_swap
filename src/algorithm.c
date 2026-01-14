@@ -6,107 +6,74 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/07 04:36:04 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/14 17:48:43 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// this function defines the fundamental moves of stack A. 
-void	sort_list(t_list *a, t_list *b, size_t size)
+static void	prepare_position(t_list *a, t_list *b, size_t size)
 {
-	if (ft_lstsize(a) >= 2 && ft_lstsize(b) >= 2)
-	{
-		if ((ft_lstlast(a)->content < a->content
-				&& ft_lstlast(a)->content < a->next->content)
-			&& (ft_lstlast(b)->content > b->content
-				&& ft_lstlast(b)->content > b->next->content))
-			rrr(&a, &b);
-		if ((a->content > ft_lstlast(a)->content
-				&& a->next->content < ft_lstlast(a)->content)
-			&& (b->content < ft_lstlast(b)->content
-				&& b->next->content > ft_lstlast(b)->content))
-			rr(&a, &b);
-		if ((a->content > a->next->content)
-			&& (b->next->content > b->content))
-			ss(&a, &b);
-	}
-	if (!sort_complete(a, size))
-		sort_a(a, b, size);
-}
-
-// here whenever stack A is ready to push to stack B, 
-void	sort_a(t_list *a, t_list *b, size_t size)
-{
-	if (ft_lstsize(a) >= 2 && !ascending(a))
-	{
-		if (ft_lstlast(a)->content < a->content
-			&& ft_lstlast(a)->content < a->next->content)
-			rra(&a);
-		else if (a->content > a->next->content
-			&& a->content > ft_lstlast(a)->content)
-			ra(&a);
-		else if (a->next->content < a->content
-			&& a->content < ft_lstlast(a)->content)
-			sa(&a);
-	}
-	if (ascending(a) && !sort_complete(a, size))
-	{
-		finalize(a, b, size);
-		return ;
-	}
-	if (!sort_complete(a, size))
-		sort_b(a, b, size);
-}
-
-void	sort_b(t_list *a, t_list *b, size_t size)
-{
+	int	steps;
 	int	direction;
 
-	if (ft_lstsize(a) >= 1 && a->content < a->next->content
-		&& a->content < ft_lstlast(a)->content && !ascending(a))
+	if (ft_lstsize(b) >= 3)
 	{
-		if (ft_lstsize(b) >= 3 && a->content < b->content
-			&& !exceed_smallest(b, a))
+		ft_printf("pls: %u\n", cheapest_node_pb(b, a)->rank);
+		return ;
+		if (calc_steps_pb(b, a) <= calc_steps_pb(b, a->next)
+			&& calc_steps_pb(b, a) <= calc_steps_pb(b, ft_lstlast(a)))
 		{
-			direction = short_direction_desc(b, a);
-			while (a->content < b->content
-				|| a->content > ft_lstlast(b)->content)
+			steps = calc_steps_pb(b, a);
+			direction = calc_direction(b, a);
+			ft_printf("test %d\n", steps);
+			while (steps > 0)
 			{
-				if (direction < 0)
-					rrb(&b);
-				else
+				if (direction > 0)
 					rb(&b);
+				else
+					rrb(&b);
 			}
 		}
-		if (a->content > b->content && a->content < ft_lstlast(b)->content
-			|| ft_lstsize(b) <= 2 || exceed_smallest(b, a)
-			|| exceed_largest(b, a))
-			pb(&b, &a);
 	}
 	if (!sort_complete(a, size))
 		sort_list(a, b, size);
 }
 
-void	finalize(t_list *a, t_list *b, size_t size)
+static void	position_next(t_list *a, t_list *b, size_t size)
 {
-	while (!sort_complete(a, size))
+	if (!exceed_largest(b, a) && !exceed_smallest(b, a)
+		&& !exceed_largest(b, a->next) && !exceed_smallest(b, a->next)
+		&& !exceed_largest(b, a) && !exceed_smallest(b, a))
+		prepare_position(a, b, size);
+	if (!sort_complete(a, size))
+		prepare_position(a, b, size);
+}
+
+static void	finalize(t_list *a, t_list *b, size_t size)
+{
+
+}
+
+void	sort_list(t_list *a, t_list *b, size_t size)
+{
+	if (ft_lstsize(b) >= 2)
 	{
-		if (ft_lstsize(b) >= 1)
-		{
-			if (ft_lstlast(a)->content < a->content
-				&& ft_lstlast(a)->content > b->content)
-				rra(&a);
-			else if (b->content > a->content)
-				ra(&a);
-			else
-				pa(&a, &b);
-		}
-		else
-			if (ft_lstlast(a)->content < a->content
-				|| exceed_smallest(a, ft_lstlast(a)))
-				rra(&a);
+		if (a->next->content > b->content
+			&& a->next->content < ft_lstlast(b)->content)
+			sa(&a);
+		else if (ft_lstlast(a) > b->content
+			&& ft_lstlast(a) < ft_lstlast(b)->content)
+			rra(&a);
 	}
+	if ((a->content > b->content && a->content < ft_lstlast(b)->content)
+		|| ft_lstsize(b) < 2 || descending(b) && (exceed_smallest(b, a)
+			|| exceed_largest(b, a)))
+		pb(&b, &a);
+	if (ascending(a))
+		finalize(a, b, size);
+	if (!sort_complete(a, size))
+		position_next(a, b, size);
 }
 
 	/*

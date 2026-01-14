@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 11:18:41 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/27 16:11:35 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/12 21:04:11 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_list
 {
 	long			content;
 	struct s_list	*next;
-	char			id;
+	unsigned int	rank;
 }					t_list;
 
 int				ft_atoi(const char *str);

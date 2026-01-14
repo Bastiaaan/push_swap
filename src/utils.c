@@ -6,66 +6,11 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:32:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/07 02:12:43 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/14 18:45:13 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-// returns -1 for rev_rotate and 1 for rotate
-int	short_direction_desc(t_list *list, t_list *item)
-{
-	int		direction;
-	int		matches;
-	t_list	*lst;
-
-	lst = list;
-	direction = 0;
-	matches = 0;
-	while (lst && direction == 0)
-	{
-		if (item->content < lst->next->content)
-		{
-			matches++;
-			lst = lst->next;
-		}
-		else
-		{
-			if (matches >= (int)(ft_lstsize(list) / 2))
-				direction = -1;
-			else
-				direction = 1;
-		}
-	}
-	return (direction);
-}
-
-int	short_direction_asc(t_list *list, t_list *item)
-{
-	int		direction;
-	int		matches;
-	t_list	*lst;
-
-	lst = list;
-	direction = 0;
-	matches = 0;
-	while (lst && direction == 0)
-	{
-		if (item->content > lst->next->content)
-		{
-			matches++;
-			lst = lst->next;
-		}
-		else
-		{
-			if (matches >= (int)(ft_lstsize(list) / 2))
-				direction = -1;
-			else
-				direction = 1;
-		}
-	}
-	return (direction);
-}
 
 void	free_list(t_list **list)
 {
@@ -105,7 +50,8 @@ void	display_list(t_list *list)
 	ft_printf("========== Displaying list ==========\n");
 	while (lst)
 	{
-		ft_printf("%u\n", lst->content);
+		ft_printf("value: %u\n", lst->content);
+		ft_printf("rank: %d\n", lst->rank);
 		lst = lst->next;
 	}
 	ft_printf("=====================================\n");
