@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 04:48:32 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/12 22:39:39 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/17 09:15:39 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	push(t_list **dest, t_list **src)
 	firstsrc = srclst;
 	*src = srclst->next;
 	firstsrc->next = NULL;
-	if (destlst->content != NULL)
+	if (ft_lstsize(destlst) >= 1 && destlst->content != NULL)
 		ft_lstadd_front(&destlst, firstsrc);
 	else
 		destlst = firstsrc;

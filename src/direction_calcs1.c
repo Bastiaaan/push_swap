@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:50:04 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/14 19:28:36 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/16 21:57:56 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	calc_exceed_pb(t_list *b)
 	t_list	*lst;
 	int		steps;
 
-	lst = b;
+	lst = clone(b);
 	steps = 0;
 	if (descending(lst))
 		return (steps++);
@@ -57,5 +57,6 @@ int	calc_exceed_pb(t_list *b)
 			steps++;
 		}
 	}
+	free_list(lst);
 	return (steps);
 }

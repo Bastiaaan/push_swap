@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 20:30:43 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/18 23:46:20 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/17 07:22:25 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	t_list	*node;
-
-	node = lst;
-	while (node->next != NULL)
-		node = node->next;
-	return (node);
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
 }

@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/14 19:22:17 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/17 10:19:53 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@ void		ss(t_list **list_a, t_list **list_b);
 
 // ======== additional functions =========
 
+t_list		*clone(t_list *src);
 void		set_rankings(t_list *list);
 void		display_list(t_list *list);
 int			exceed_largest(t_list *list, t_list *item);
 int			exceed_smallest(t_list *list, t_list *item);
+int			pb_fit(t_list *b, t_list *node);
 int			sort_complete(t_list *list, size_t original_size);
 int			calc_direction(t_list *list, t_list *item);
-void		free_list(t_list **list);
+void		free_list(t_list *list);
 
 #endif

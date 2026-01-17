@@ -6,20 +6,51 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:32:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/14 18:45:13 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/17 10:19:29 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	free_list(t_list **list)
+int	pb_fit(t_list *b, t_list *node)
 {
+	return (node != NULL
+		&& node->content > b->content
+		&& node->content < ft_lstlast(b)->content);
+}
+
+t_list	*clone(t_list *src)
+{
+	t_list	*new;
+	t_list	*dest;
 	t_list	*lst;
 
-	lst = *list;
+	lst = src;
+	dest = NULL;
 	while (lst)
 	{
+		new = ft_lstnew(lst->content);
+		new->rank = lst->rank;
+		if (dest == NULL)
+			dest = new;
+		else
+			ft_lstadd_back(&dest, new);
 		lst = lst->next;
+	}
+	return (dest);
+}
+
+void	free_list(t_list *list)
+{
+	t_list	*lst;
+	t_list	*tmp;
+
+	lst = list;
+	while (lst)
+	{
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
 	}
 }
 

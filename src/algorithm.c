@@ -6,46 +6,61 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/14 17:48:43 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/17 11:12:36 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static void	prepare_position(t_list *a, t_list *b, size_t size)
+static t_list	*cheapest(t_list *a, t_list *b)
 {
-	int	steps;
-	int	direction;
+	t_list	*cheapest;
 
 	if (ft_lstsize(b) >= 3)
 	{
-		ft_printf("pls: %u\n", cheapest_node_pb(b, a)->rank);
-		return ;
 		if (calc_steps_pb(b, a) <= calc_steps_pb(b, a->next)
 			&& calc_steps_pb(b, a) <= calc_steps_pb(b, ft_lstlast(a)))
+			cheapest = a;
+		else if (calc_steps_pb(b, a->next) <= calc_steps_pb(b, a)
+			&& calc_steps_pb(b, a->next) <= calc_steps_pb(b, ft_lstlast(a)))
+			cheapest = a->next;
+		else if (calc_steps_pb(b, ft_lstlast(a)) <= calc_steps_pb(b, a)
+			&& calc_steps_pb(b, ft_lstlast(a)) <= calc_steps_pb(b, a->next))
+			cheapest = ft_lstlast(a);
+	}
+	else
+		cheapest = NULL;
+	return (cheapest);
+}
+
+static void	prepare_position(t_list *a, t_list *b, size_t size)
+{
+	if (!sort_complete(a, size))
+		sort_list(a, b, size);
+}
+
+static void	choose_cheapest(t_list *a, t_list *b, size_t size)
+{
+	int		steps;
+	int		direction;
+	t_list	*chosen;
+
+	if (ft_lstsize(b) >= 3)
+	{
+		chosen = cheapest(a, b);
 		{
-			steps = calc_steps_pb(b, a);
-			direction = calc_direction(b, a);
-			ft_printf("test %d\n", steps);
+			steps = calc_steps_pb(b, chosen);
+			direction = calc_direction(b, chosen);
 			while (steps > 0)
 			{
 				if (direction > 0)
 					rb(&b);
 				else
 					rrb(&b);
+				steps--;
 			}
 		}
 	}
-	if (!sort_complete(a, size))
-		sort_list(a, b, size);
-}
-
-static void	position_next(t_list *a, t_list *b, size_t size)
-{
-	if (!exceed_largest(b, a) && !exceed_smallest(b, a)
-		&& !exceed_largest(b, a->next) && !exceed_smallest(b, a->next)
-		&& !exceed_largest(b, a) && !exceed_smallest(b, a))
-		prepare_position(a, b, size);
 	if (!sort_complete(a, size))
 		prepare_position(a, b, size);
 }
@@ -58,22 +73,18 @@ static void	finalize(t_list *a, t_list *b, size_t size)
 void	sort_list(t_list *a, t_list *b, size_t size)
 {
 	if (ft_lstsize(b) >= 2)
-	{
-		if (a->next->content > b->content
-			&& a->next->content < ft_lstlast(b)->content)
+		if (a->next->content > b->content && a->next->content
+			< ft_lstlast(b)->content)
 			sa(&a);
-		else if (ft_lstlast(a) > b->content
-			&& ft_lstlast(a) < ft_lstlast(b)->content)
-			rra(&a);
-	}
-	if ((a->content > b->content && a->content < ft_lstlast(b)->content)
-		|| ft_lstsize(b) < 2 || descending(b) && (exceed_smallest(b, a)
+	if ((ft_lstsize(b) >= 2 && a->content > b->content
+			&& a->content < ft_lstlast(b)->content)
+		|| ft_lstsize(b) <= 1 || (descending(b) && exceed_smallest(b, a)
 			|| exceed_largest(b, a)))
 		pb(&b, &a);
 	if (ascending(a))
 		finalize(a, b, size);
 	if (!sort_complete(a, size))
-		position_next(a, b, size);
+		choose_cheapest(a, b, size);
 }
 
 	/*

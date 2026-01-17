@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:03:50 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/14 13:47:03 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/17 09:47:16 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@ void	set_rankings(t_list *list)
 	t_list	*lst2;
 	int		rank;
 
-	rank = 1;
 	lst1 = list;
 	while (lst1)
 	{
 		lst2 = list;
-		rank = 1;
+		rank = 0;
 		while (lst2)
 		{
 			if (lst1->content > lst2->content)
@@ -60,15 +59,18 @@ t_list	*handlebigargv(char *argv)
 
 	i = 0;
 	args = ft_split(argv, ' ');
+	new = NULL;
 	if (!args)
 		return (NULL);
-	new = ft_calloc(1, sizeof(t_list));
 	while (args[i])
 	{
 		if (valid_input(args[i]))
 		{
 			tmp = ft_lstnew((long)ft_atoi(args[i]));
-			ft_lstadd_back(&new, tmp);
+			if (new == 0x0)
+				new = tmp;
+			else
+				ft_lstadd_back(&new, tmp);
 		}
 		i++;
 	}
@@ -79,25 +81,25 @@ t_list	*handlebigargv(char *argv)
 t_list	*handleargv(char *argv[])
 {
 	t_list	*list;
-	t_list	*tmp;
+	t_list	*new;
 	int		arg_cast;
 	int		i;
 
+	list = NULL;
 	i = 1;
-	list = ft_calloc(1, sizeof(t_list));
-	if (!list)
-		return (NULL);
 	while (argv[i])
 	{
 		if (valid_input(argv[i]))
 		{
 			arg_cast = ft_atoi(argv[i]);
-			tmp = ft_lstnew((long)arg_cast);
-			ft_lstadd_back(&list, tmp);
+			new = ft_lstnew((long)arg_cast);
+			if (list == NULL)
+				list = new;
+			else
+				ft_lstadd_back(&list, new);
 		}
 		i++;
 	}
-	list = list->next;
 	return (list);
 }
 
@@ -115,13 +117,11 @@ int	main(int argc, char *argv[])
 		list_a = handlebigargv(argv[1]);
 	else
 		list_a = handleargv(argv);
-	list_b = ft_calloc(ft_lstsize(list_a), sizeof(t_list));
-	if (!list_b)
-		return (0);
+	list_b = NULL;
 	set_rankings(list_a);
 	run(list_a, list_b);
-	free_list(&list_a);
-	free_list(&list_b);
+	free_list(list_a);
+	free_list(list_b);
 	return (1);
 }
 // testing already sorted list: 4 5 234 310 400 673 824
