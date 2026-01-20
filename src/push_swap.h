@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/17 10:19:53 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/19 22:02:42 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int			exceed_smallest(t_list *list, t_list *item);
 int			pb_fit(t_list *b, t_list *node);
 int			sort_complete(t_list *list, size_t original_size);
 int			calc_direction(t_list *list, t_list *item);
+int			calc_direction_exceed(t_list *list);
 void		free_list(t_list *list);
 
 #endif

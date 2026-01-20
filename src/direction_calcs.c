@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 17:34:48 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/17 01:41:21 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/19 21:51:08 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	calc_direction(t_list *list, t_list *item)
 	matches = 0;
 	while (lst && direction == 0)
 	{
-		if (item->content < lst->content)
+		if (item->content > lst->content)
 		{
 			matches++;
 			lst = lst->next;
@@ -45,7 +45,7 @@ int	calc_steps_pb(t_list *b, t_list *src)
 	t_list	*lst;
 	int		steps;
 
-	lst = b;
+	lst = clone(b);
 	if (!lst)
 		return (NULL);
 	if (exceed_smallest(b, src) || exceed_largest(b, src))
@@ -63,6 +63,7 @@ int	calc_steps_pb(t_list *b, t_list *src)
 			steps++;
 		}
 	}
+	free_list(lst);
 	return (steps);
 }
 

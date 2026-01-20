@@ -6,14 +6,14 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:50:04 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/16 21:57:56 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/19 22:01:48 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 // returns 1 for rotate. returns -1 for reverse rotate
-static int	calc_direction_exceed(t_list *list)
+int	calc_direction_exceed(t_list *list)
 {
 	t_list	*lst;
 	t_list	*prev;
