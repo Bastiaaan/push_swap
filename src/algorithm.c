@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/20 13:07:21 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/21 16:10:24 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,20 @@
 static t_list	*cheapest(t_list *a, t_list *b)
 {
 	t_list	*cheapest;
+	int		steps_first;
+	int		steps_second;
+	int		steps_last;
 
+	steps_first = calc_steps_pb(b, a);
+	steps_second = calc_steps_pb(b, a->next);
+	steps_last = calc_steps_pb(b, ft_lstlast(a));
 	if (ft_lstsize(b) >= 3)
 	{
-		if (calc_steps_pb(b, a) <= calc_steps_pb(b, a->next)
-			&& calc_steps_pb(b, a) <= calc_steps_pb(b, ft_lstlast(a)))
+		if (steps_first <= steps_second && steps_first <= steps_last)
 			cheapest = a;
-		else if (calc_steps_pb(b, a->next) <= calc_steps_pb(b, a)
-			&& calc_steps_pb(b, a->next) <= calc_steps_pb(b, ft_lstlast(a)))
+		else if (steps_second <= steps_first && steps_second <= steps_last)
 			cheapest = a->next;
-		else if (calc_steps_pb(b, ft_lstlast(a)) <= calc_steps_pb(b, a)
-			&& calc_steps_pb(b, ft_lstlast(a)) <= calc_steps_pb(b, a))
+		else if (steps_last <= steps_first && steps_last <= steps_first)
 			cheapest = ft_lstlast(a);
 	}
 	else
@@ -33,49 +36,49 @@ static t_list	*cheapest(t_list *a, t_list *b)
 	return (cheapest);
 }
 
-static void	prepare_position(t_list *a, t_list *b, size_t size)
+static void	prep_pb(t_list **a, t_list **b, t_list *c, int direction)
 {
-	if (ft_lstsize(b) >= 3)
+	int	steps;
+
+	steps = calc_steps_pb(*b, c);
+	while (steps > 0)
 	{
-		if (a->next->content > b->next->content
-			&& a->next->content < ft_lstlast(b)->content)
-			rr(&a, &b);
-		else if (ft_lstlast(a)->content > ft_lstlast(b)->content
-			&& ft_lstlast(a)->content > b->content
-			&& ft_lstlast(a) == cheapest(a, b))
-		rrr(&a, &b);
+		if (direction > 0)
+		{
+			if ((*a)->next->content > (*b)->next->content
+				&& (*b)->content > ft_lstlast(*b)->content)
+				rr(a, b);
+			else
+				rb(b);
+		}
+		else
+		{
+			if (exceed_largest(*b, c) && c->content > (*b)->content
+				&& ft_lstlast(*b)->content > (*b)->content)
+				rrr(a, b);
+			else
+				rrb(b);
+		}
+		steps--;
 	}
-	if (!sort_complete(a, size))
-		sort_list(a, b, size);
 }
 
 static void	choose_cheapest(t_list *a, t_list *b, size_t size)
 {
-	int		steps;
 	int		direction;
 	t_list	*chosen;
 
 	if (ft_lstsize(b) >= 3)
 	{
 		chosen = cheapest(a, b);
-		{
-			steps = calc_steps_pb(b, chosen);
-			if (exceed_largest(b, chosen) || exceed_smallest(b, chosen))
-				direction = calc_direction_exceed(b);
-			else
-				direction = calc_direction(b, chosen);
-			while (steps > 0)
-			{
-				if (direction > 0)
-					rb(&b);
-				else
-					rrb(&b);
-				steps--;
-			}
-		}
+		if (exceed_largest(b, chosen) || exceed_smallest(b, chosen))
+			direction = calc_direction_exceed(b);
+		else
+			direction = calc_direction_pb(b, chosen);
+		prep_pb(&a, &b, chosen, direction);
 	}
 	if (!sort_complete(a, size))
-		prepare_position(a, b, size);
+		sort_list(a, b, size);
 }
 
 static void	finalize(t_list *a, t_list *b, size_t size)
@@ -86,12 +89,14 @@ static void	finalize(t_list *a, t_list *b, size_t size)
 void	sort_list(t_list *a, t_list *b, size_t size)
 {
 	if (ft_lstsize(b) >= 2)
+	{
 		if (a->next->content > b->content && a->next->content
-			< ft_lstlast(b)->content)
+			< ft_lstlast(b)->content && a->next->content < a->content)
 			sa(&a);
-		else if (ft_lstlast(a)->content > b->content &&
-			ft_lstlast(a)->content < ft_lstlast(b)->content)
+		else if (ft_lstlast(a)->content > b->content
+			&& ft_lstlast(a)->content < ft_lstlast(b)->content)
 			rra(&a);
+	}
 	if ((ft_lstsize(b) >= 2 && a->content > b->content
 			&& a->content < ft_lstlast(b)->content)
 		|| ft_lstsize(b) <= 1 || (descending(b) && exceed_smallest(b, a)
