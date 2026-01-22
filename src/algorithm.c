@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/21 16:10:24 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/22 22:25:12 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	prep_pb(t_list **a, t_list **b, t_list *c, int direction)
 		}
 		else
 		{
-			if (exceed_largest(*b, c) && c->content > (*b)->content
+			if (exceed_largest(*b, c)
 				&& ft_lstlast(*b)->content > (*b)->content)
 				rrr(a, b);
 			else
@@ -77,31 +77,47 @@ static void	choose_cheapest(t_list *a, t_list *b, size_t size)
 			direction = calc_direction_pb(b, chosen);
 		prep_pb(&a, &b, chosen, direction);
 	}
+	correct_stack(a, b, cheapest);
+	if ((ft_lstsize(b) >= 2 && a->content > b->content
+			&& a->content < ft_lstlast(b)->content)
+		|| ft_lstsize(b) < 2 || (descending(b) && exceed_smallest(b, a)
+			|| exceed_largest(b, a)))
+		pb(&b, &a);
 	if (!sort_complete(a, size))
-		sort_list(a, b, size);
+		sort_stack(a, b, size);
 }
 
 static void	finalize(t_list *a, t_list *b, size_t size)
 {
+	int	direction;
 
+	direction = calc_direction_rotate_a(a);
+	while (!sort_complete(a, size))
+	{
+		if (ft_lstsize(b) == 0)
+		{
+			if (direction < 0)
+				rra(&a);
+			else
+				ra(&a);
+		}
+		else
+		{
+			if (a->content > ft_lstlast(a)->content
+				&& ft_lstlast(a)->content > b->content)
+				rra(&a);
+			else
+				pa(&a, &b);
+		}
+	}
 }
 
-void	sort_list(t_list *a, t_list *b, size_t size)
+void	sort_stack(t_list *a, t_list *b, size_t size)
 {
-	if (ft_lstsize(b) >= 2)
+	if (ft_lstsize(a) <= 5)
 	{
-		if (a->next->content > b->content && a->next->content
-			< ft_lstlast(b)->content && a->next->content < a->content)
-			sa(&a);
-		else if (ft_lstlast(a)->content > b->content
-			&& ft_lstlast(a)->content < ft_lstlast(b)->content)
-			rra(&a);
+		
 	}
-	if ((ft_lstsize(b) >= 2 && a->content > b->content
-			&& a->content < ft_lstlast(b)->content)
-		|| ft_lstsize(b) <= 1 || (descending(b) && exceed_smallest(b, a)
-			|| exceed_largest(b, a)))
-		pb(&b, &a);
 	if (ascending(a))
 		finalize(a, b, size);
 	if (!sort_complete(a, size))

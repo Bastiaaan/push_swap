@@ -6,7 +6,7 @@
 #    By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/05 02:46:26 by brogaar           #+#    #+#              #
-#    Updated: 2026/01/20 22:31:31 by brogaar          ###   ########.fr        #
+#    Updated: 2026/01/22 21:58:33 by brogaar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS   = main.c \
 		 src/push_swap.c \
 		 src/utils.c \
 		 src/algorithm.c \
+		 src/algorithm1.c \
 		 src/mini_algorithm.c \
 		 src/direction_calcs.c \
 		 src/direction_calcs1.c \

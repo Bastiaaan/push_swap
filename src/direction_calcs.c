@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 17:34:48 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/21 15:43:26 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/22 15:53:20 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	calc_direction_pb(t_list *list, t_list *item)
 		matches++;
 	}
 	free_list(lst);
-	if (matches >= (int)(ft_lstsize(list) / 2))
+	if (matches > (int)(ft_lstsize(list) / 2))
 		direction = -1;
 	else
 		direction = 1;
@@ -63,9 +63,23 @@ int	calc_steps_pb(t_list *b, t_list *src)
 	return (steps);
 }
 
-int	calc_steps_pa(t_list *a, t_list *src)
+int	calc_direction_rotate_a(t_list *a)
 {
-	return (0);
+	t_list	*lst;
+	int		matches;
+
+	lst = clone(a);
+	while (lst->next != NULL)
+	{
+		if (lst->content < lst->next->content)
+			matches++;
+		lst = lst->next;
+	}
+	free_list(lst);
+	if (matches > ((int)ft_lstsize(a) / 2))
+		return (-1);
+	else
+		return (1);
 }
 
 // original calc_direction_code below;

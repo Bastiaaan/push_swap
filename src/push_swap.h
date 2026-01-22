@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/21 15:02:48 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/22 22:00:27 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 
 // =========== Sort algorithm ============
 
-void		sort_list(t_list *a, t_list *b, size_t size);
+void		sort_stack(t_list *a, t_list *b, size_t size);
 int			calc_steps_pb(t_list *dest, t_list *elem);
 int			calc_exceed_pb(t_list *b);
-t_list		*cheapest_node_pb(t_list *dest, t_list *src);
+void		correct_stack(t_list *a, t_list *b, t_list *cheapest);
 int			ascending(t_list *list);
 int			descending(t_list *list);
 void		run(t_list *a, t_list *b);
@@ -61,6 +61,7 @@ int			pb_fit(t_list *b, t_list *node);
 int			sort_complete(t_list *list, size_t original_size);
 int			calc_direction_pb(t_list *list, t_list *item);
 int			calc_direction_exceed(t_list *list);
+int			calc_direction_rotate_a(t_list *a);
 void		free_list(t_list *list);
 
 #endif
