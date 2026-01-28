@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/22 22:25:12 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/27 17:42:14 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static t_list	*cheapest(t_list *a, t_list *b)
 	steps_first = calc_steps_pb(b, a);
 	steps_second = calc_steps_pb(b, a->next);
 	steps_last = calc_steps_pb(b, ft_lstlast(a));
-	if (ft_lstsize(b) >= 3)
+	if (ft_lstsize(b) >= 2)
 	{
 		if (steps_first <= steps_second && steps_first <= steps_last)
 			cheapest = a;
@@ -45,16 +45,18 @@ static void	prep_pb(t_list **a, t_list **b, t_list *c, int direction)
 	{
 		if (direction > 0)
 		{
-			if ((*a)->next->content > (*b)->next->content
-				&& (*b)->content > ft_lstlast(*b)->content)
+			if (steps == 1
+				&& (*a)->next->content == c->content
+				&& (*a)->next->content > (*b)->next->content)
 				rr(a, b);
 			else
 				rb(b);
 		}
 		else
 		{
-			if (exceed_largest(*b, c)
-				&& ft_lstlast(*b)->content > (*b)->content)
+			if (steps == 1
+				&& ft_lstlast(*a)->content > ft_lstlast(*b)->content
+				&& ft_lstlast(*a)->content == c->content)
 				rrr(a, b);
 			else
 				rrb(b);
@@ -68,7 +70,7 @@ static void	choose_cheapest(t_list *a, t_list *b, size_t size)
 	int		direction;
 	t_list	*chosen;
 
-	if (ft_lstsize(b) >= 3)
+	if (ft_lstsize(b) >= 2)
 	{
 		chosen = cheapest(a, b);
 		if (exceed_largest(b, chosen) || exceed_smallest(b, chosen))
@@ -77,7 +79,7 @@ static void	choose_cheapest(t_list *a, t_list *b, size_t size)
 			direction = calc_direction_pb(b, chosen);
 		prep_pb(&a, &b, chosen, direction);
 	}
-	correct_stack(a, b, cheapest);
+	correct_stack(&a, &b, chosen);
 	if ((ft_lstsize(b) >= 2 && a->content > b->content
 			&& a->content < ft_lstlast(b)->content)
 		|| ft_lstsize(b) < 2 || (descending(b) && exceed_smallest(b, a)
@@ -106,6 +108,8 @@ static void	finalize(t_list *a, t_list *b, size_t size)
 			if (a->content > ft_lstlast(a)->content
 				&& ft_lstlast(a)->content > b->content)
 				rra(&a);
+			else if (b->content > a->content && a->next->content > b->content)
+				sa(&a);
 			else
 				pa(&a, &b);
 		}
@@ -114,13 +118,13 @@ static void	finalize(t_list *a, t_list *b, size_t size)
 
 void	sort_stack(t_list *a, t_list *b, size_t size)
 {
-	if (ft_lstsize(a) <= 5)
+	if (ft_lstsize(a) <= 10)
 	{
-		
+		mini_sort(a, b);
+		if (!sort_complete(a, size))
+			finalize(a, b, size);
 	}
-	if (ascending(a))
-		finalize(a, b, size);
-	if (!sort_complete(a, size))
+	else if (!sort_complete(a, size))
 		choose_cheapest(a, b, size);
 }
 

@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:03:50 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/22 21:53:45 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/26 17:23:08 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,18 +111,23 @@ int	main(int argc, char *argv[])
 	if (argc <= 1)
 	{
 		ft_printf("Error\n");
-		return (0);
+		return (1);
 	}
 	else if (argc == 2 && ft_strchr(argv[1], 32) != NULL)
 		list_a = handlebigargv(argv[1]);
 	else
 		list_a = handleargv(argv);
+	// if (!ft_lstunique(&list_a))
+	// {
+	// 	ft_printf("Error\n");
+	// 	return (1);
+	// }
 	list_b = NULL;
 	set_rankings(list_a);
 	run(list_a, list_b);
 	free_list(list_a);
 	free_list(list_b);
-	return (1);
+	return (0);
 }
 // testing already sorted list: 4 5 234 310 400 673 824
 // make re && ./push_swap.a 27052 2115 28406 25393 3780 34829 38903 7304 33672 20805 38466 46141 29931 40997 24240 27642 36607 8915 46758 39083 15256 44636 26895 2780 45849 16674 25857 24018 14041 44492 4175 14253 4573 18544 3320 112 1466 24509 44878 45155 14368 1164 19786 23046 35559 46178 15107 47244 30874 17841 -- normal test
