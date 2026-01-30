@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:32:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/19 17:37:48 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/28 18:38:38 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	sort_complete(t_list *list, size_t original_size)
 
 	lst = list;
 	in = 0;
+	if (ft_lstsize(list) < original_size)
+		return (0);
 	while (lst)
 	{
 		if (lst->next != NULL && lst->content > lst->next->content)

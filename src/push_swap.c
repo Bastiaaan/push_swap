@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 04:48:32 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/22 21:55:38 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/30 06:41:14 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,23 @@ void	run(t_list *a, t_list *b)
 	int		lstsize;
 
 	lstsize = ft_lstsize(a);
-	sort_stack(a, b, lstsize);
+	if (ft_lstsize(a) <= 10)
+		mini_sort(&a, &b);
+	else
+	{
+		while (ft_lstsize(a) > 3)
+			pb(&b, &a);
+		while (!ascending(a))
+		{
+			if (a->content > a->next->content
+				&& a->next->content < a->next->next->content)
+				sa(&a);
+			else if (a->content > a->next->content
+				&& a->content > a->next->next->content)
+				ra(&a);
+			else
+				rra(&a);
+		}
+		sort_stack(a, b, lstsize);
+	}
 }

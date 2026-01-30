@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:50:04 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/20 18:19:13 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/30 06:17:02 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	calc_direction_exceed(t_list *list)
 	{
 		prev = lst;
 		lst = lst->next;
-		if (lst != NULL && lst->content > prev->content)
+		if (lst != NULL && lst->content < prev->content)
 		{
 			if (steps < ((int)ft_lstsize(lst) / 2))
 				return (1);
@@ -37,18 +37,18 @@ int	calc_direction_exceed(t_list *list)
 	return (0);
 }
 
-int	calc_exceed_pb(t_list *b)
+int	calc_exceed_pa(t_list *a)
 {
 	t_list	*lst;
 	int		steps;
 
-	lst = clone(b);
 	steps = 0;
-	if (descending(lst))
+	if (ascending(a))
 		return (steps++);
 	else
 	{
-		while (!descending(lst))
+		lst = clone(a);
+		while (!ascending(lst))
 		{
 			if (calc_direction_exceed(lst) < 0)
 				rev_rotate(&lst);
@@ -56,7 +56,7 @@ int	calc_exceed_pb(t_list *b)
 				rotate(&lst);
 			steps++;
 		}
+		free_list(lst);
 	}
-	free_list(lst);
 	return (steps);
 }

@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/27 13:18:02 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/30 06:15:19 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@
 // =========== Sort algorithm ============
 
 void		sort_stack(t_list *a, t_list *b, size_t size);
-void		mini_sort(t_list *a, t_list *b);
-int			calc_steps_pb(t_list *dest, t_list *elem);
-int			calc_exceed_pb(t_list *b);
+void		mini_sort(t_list **a, t_list **b);
+int			calc_steps_pa(t_list *dest, t_list *elem);
+int			calc_exceed_pa(t_list *a);
+void		re_roll(t_list **a, t_list **b, t_list *chosen);
 void		correct_stack(t_list **a, t_list **b, t_list *cheapest);
 int			ascending(t_list *list);
 int			descending(t_list *list);
@@ -58,11 +59,10 @@ void		set_rankings(t_list *list);
 void		display_list(t_list *list);
 int			exceed_largest(t_list *list, t_list *item);
 int			exceed_smallest(t_list *list, t_list *item);
-int			pb_fit(t_list *b, t_list *node);
 int			sort_complete(t_list *list, size_t original_size);
-int			calc_direction_pb(t_list *list, t_list *item);
+int			calc_direction_pa(t_list *list, t_list *item);
 int			calc_direction_exceed(t_list *list);
-int			calc_direction_rotate_a(t_list *a);
+int			calc_direction_pa(t_list *a, t_list *src);
 void		free_list(t_list *list);
 
 #endif
