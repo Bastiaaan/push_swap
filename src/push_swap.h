@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/30 06:15:19 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/30 12:40:28 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,19 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 # include "../ft_printf/ft_printf.h"
+
+typedef struct s_instructions
+{
+	struct t_list	*target;
+	struct t_list	*src;
+	int				rot_a;
+	int				rot_b;
+	int				rev_a;
+	int				rev_b;
+	int				rr;
+	int				rrr;
+}	t_instructions;
+
 
 // =========== Sort algorithm ============
 
