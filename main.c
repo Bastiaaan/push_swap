@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:03:50 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/29 00:20:42 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/30 15:34:24 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,11 @@ int	main(int argc, char *argv[])
 		list_a = handlebigargv(argv[1]);
 	else
 		list_a = handleargv(argv);
-	if (!ft_lstunique(&list_a))
-	{
-		ft_printf("Error\n");
-		return (1);
-	}
+	// if (!ft_lstunique(&list_a))
+	// {
+	// 	ft_printf("Error\n");
+	// 	return (1);
+	// }
 	list_b = NULL;
 	set_rankings(list_a);
 	run(list_a, list_b);

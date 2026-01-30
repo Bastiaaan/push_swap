@@ -6,18 +6,11 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:32:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/28 18:38:38 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/30 14:32:01 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	pb_fit(t_list *b, t_list *node)
-{
-	return (node != NULL
-		&& node->content > b->content
-		&& node->content < ft_lstlast(b)->content);
-}
 
 t_list	*clone(t_list *src)
 {

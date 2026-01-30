@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/30 12:40:28 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/01/30 18:06:28 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,51 @@
 # include "../libft/libft.h"
 # include "../ft_printf/ft_printf.h"
 
+typedef struct s_route
+{
+	struct t_list	*node;
+	struct t_list	*target;
+	size_t			size;
+	int				steps;
+	int				direction;
+	int				self_steps;
+	int				self_direction;
+}	t_route;
+
+
 typedef struct s_instructions
 {
-	struct t_list	*target;
-	struct t_list	*src;
 	int				rot_a;
 	int				rot_b;
 	int				rev_a;
 	int				rev_b;
 	int				rr;
-	int				rrr;
+	int				rrr;	
 }	t_instructions;
 
+typedef struct s_stack
+{
+	t_list* top;
+	t_list* min;
+	t_list* max; //max->next = min;
+}	t_stack;
+
+// curr = min;
+// if (curr == max)
+//		break;
+// 'a' = rotate 'z' = reverse rotate 'A' = double rotate 'Z' = double reverse rotate
 
 // =========== Sort algorithm ============
 
 void		sort_stack(t_list *a, t_list *b, size_t size);
 void		mini_sort(t_list **a, t_list **b);
+void		execute_route(t_list **a, t_list **b, t_route route);
 int			calc_steps_pa(t_list *dest, t_list *elem);
 int			calc_exceed_pa(t_list *a);
-void		re_roll(t_list **a, t_list **b, t_list *chosen);
-void		correct_stack(t_list **a, t_list **b, t_list *cheapest);
 int			ascending(t_list *list);
-int			descending(t_list *list);
 void		run(t_list *a, t_list *b);
+t_route		set_route(t_list *node, t_list *target, int steps, int self_steps);
+t_route		get_shortest(t_route *route_1, t_route *route_2);
 
 // ========= Push-swap Functions =========
 
