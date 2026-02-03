@@ -6,29 +6,11 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/30 18:15:08 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/03 01:01:09 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	execute_route(t_list **a, t_list **b, t_route route)
-{
-	while (route.steps--)
-	{
-		if (route.direction > 0)
-			ra(a);
-		else
-			rra(a);
-	}
-	while (route.self_steps--)
-	{
-		if (route.self_direction > 0)
-			rb(b);
-		else
-			rrb(b);
-	}
-}
 
 int	min(int a, int b)
 {
@@ -46,12 +28,16 @@ t_instructions	intr_min(t_instructions *a, t_instructions *b)
 	return (*b);
 }
 
-t_route	get_shortest(t_route *route_1, t_route *route_2)
+t_route	*get_shortest(t_route *route_1, t_route *route_2)
 {
-	if ((route_1->steps + route_1->self_steps)
-		< (route_2->steps + route_2->self_steps))
-		return (*route_1);
-	return (*route_2);
+	if (!route_1 || route_1->node == NULL)
+		return (route_2);
+	if (!route_2 || route_2->node == NULL)
+		return (route_1);
+	if ((route_1->a_steps + route_1->b_steps)
+		< (route_2->a_steps + route_2->b_steps))
+		return (route_1);
+	return (route_2);
 }
 
 t_instructions init(int rot_a, int rot_b, int rev_a, int rev_b, int rr, int rrr)
@@ -131,52 +117,99 @@ static t_instructions	cheapest(t_list **a, t_list **b)
 	return (best);
 }
 
-static t_route	find_best_option(t_list **a, t_list **b)
+static t_route	*select_best(t_route **route)
 {
-	t_list	*la;
-	t_list	*lb;
-	t_route	route;
-	t_route	better;
-	int		moves_a;
-	int		moves_b;
+	t_route		*best;
+	t_route		*current;
+	int			index;
 
-	la = *a;
+	index = 0;
+	while (route[index])
+	{
+		if (index == 0)
+			best = route[index];
+		else
+		{
+			current = route[index];
+			best = get_shortest(best, current);
+		}
+		index++;
+	}
+	return (best);
+}
+
+static t_route	**get_routes(t_list **a, t_list **b, size_t a_size, size_t b_size)
+{
+	t_list			*la;
+	t_list			*lb;
+	t_route			**routes;
+	unsigned int	moves_a;
+	unsigned int	moves_b;
+
 	lb = *b;
 	moves_a = 0;
 	moves_b = 0;
+	routes = ft_calloc(ft_lstsize(*b) + 1, sizeof(t_route *));
+	if (!routes)
+		return (NULL);
 	while (lb)
 	{
-		while (la && la->content < lb->content)
-		{
-			la = la->next;
-			moves_a++;
-		}
-		route = set_route(lb, la, moves_a, moves_b);
-		better = get_shortest(&better, &route);
-		moves_b++;
 		la = *a;
+		while (la && !pa_compatible(la, lb))
+			la = la->next, moves_a++;
+		routes[moves_b] = init_route(lb, la, a_size, b_size);
+		routes[moves_b] = fill_route(routes[moves_b], moves_a, moves_b);
+		moves_a = 0;
+		moves_b++;
 		lb = lb->next;
 	}
-	return (better);
+	return (routes);
+}
+
+int pa_compatible(t_list *a, t_list *b)
+{
+	if (!b || !a)
+		return (0);
+	if (b->content < a->content
+		|| ())
+		return (1);
+	return (0);
 }
 
 void	sort_stack(t_list *a, t_list *b, size_t size)
 {
-	t_route	route;
+	t_route	*chosen;
+	t_route	**routes;
+	int		i;
 
+	i = 0;
 	while (ft_lstsize(b) > 0)
 	{
-		route = find_best_option(&a, &b);
-		execute_route(&a, &b, route);
+		routes = get_routes(&a, &b, ft_lstsize(a), ft_lstsize(b));
+		chosen = select_best(routes);
+		execute_route(&a, &b, *chosen);
 		pa(&a, &b);
+		free_routes(routes);
 	}
+}
+
+void	free_routes(t_route **routes)
+{
+	int	i;
+
+	i = 0;
+	while (routes[i])
+	{
+		free(routes[i]);
+		i++;
+	}
+	free(routes);
 }
 // while (b not empty)
 //  calc_instruct
 //  execute_instr
 
-//TODO: assign correct values to their correct targets.
-//During the iteration, calculate if (b->content < a->content).
-
+// TODO: assign correct values to their correct targets.
+// During the iteration, calculate if (b->content < a->content).
 
 // in another function, the t_instructions shall be applied untill all the numbers are set to 0.

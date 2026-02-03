@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/30 18:06:28 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/03 00:32:11 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 
 typedef struct s_route
 {
-	struct t_list	*node;
-	struct t_list	*target;
-	size_t			size;
-	int				steps;
-	int				direction;
-	int				self_steps;
-	int				self_direction;
+	struct s_list	*node;
+	struct s_list	*target;
+	int				a_direction;
+	size_t			a_size;
+	int				a_steps;
+	int				b_direction;
+	size_t			b_size;
+	int				b_steps;
 }	t_route;
-
 
 typedef struct s_instructions
 {
@@ -41,9 +41,9 @@ typedef struct s_instructions
 
 typedef struct s_stack
 {
-	t_list* top;
-	t_list* min;
-	t_list* max; //max->next = min;
+	t_list*	top;
+	t_list*	min;
+	t_list*	max; //max->next = min;
 }	t_stack;
 
 // curr = min;
@@ -60,8 +60,9 @@ int			calc_steps_pa(t_list *dest, t_list *elem);
 int			calc_exceed_pa(t_list *a);
 int			ascending(t_list *list);
 void		run(t_list *a, t_list *b);
-t_route		set_route(t_list *node, t_list *target, int steps, int self_steps);
-t_route		get_shortest(t_route *route_1, t_route *route_2);
+t_route		*init_route(t_list *node, t_list *target, size_t a_size, size_t b_size);
+t_route		*fill_route(t_route *route, int steps, int self_steps);
+t_route		*get_shortest(t_route *route_1, t_route *route_2);
 
 // ========= Push-swap Functions =========
 
