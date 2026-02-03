@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 04:48:32 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/30 06:41:14 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/03 21:39:26 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,28 +79,25 @@ void	rev_rotate(t_list **list)
 	*list = last;
 }
 
-void	run(t_list *a, t_list *b)
+void	run(t_list **a, t_list **b)
 {
-	int		lstsize;
-
-	lstsize = ft_lstsize(a);
-	if (ft_lstsize(a) <= 10)
-		mini_sort(&a, &b);
+	if (ft_lstsize((*a)) <= 10)
+		mini_sort(a, b);
 	else
 	{
-		while (ft_lstsize(a) > 3)
-			pb(&b, &a);
-		while (!ascending(a))
+		while (ft_lstsize((*a)) > 3)
+			pb(b, a);
+		while (!ascending((*a)))
 		{
-			if (a->content > a->next->content
-				&& a->next->content < a->next->next->content)
-				sa(&a);
-			else if (a->content > a->next->content
-				&& a->content > a->next->next->content)
-				ra(&a);
+			if ((*a)->content > (*a)->next->content
+				&& (*a)->next->content < (*a)->next->next->content)
+				sa(a);
+			else if ((*a)->content > (*a)->next->content
+				&& (*a)->content > (*a)->next->next->content)
+				ra(a);
 			else
-				rra(&a);
+				rra(a);
 		}
-		sort_stack(a, b, lstsize);
+		sort_stack(a, b);
 	}
 }

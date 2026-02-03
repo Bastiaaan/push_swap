@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 22:24:55 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/28 19:13:15 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/03 19:57:04 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,5 @@ void	mini_sort(t_list **a, t_list **b)
 			ra(a);
 	}
 	finish(a, b, borrowed);
+	finalize(a);
 }

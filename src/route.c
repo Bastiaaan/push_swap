@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 21:58:13 by brogaar           #+#    #+#             */
-/*   Updated: 2026/02/03 00:47:08 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/03 17:37:17 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_route	*fill_route(t_route *route, int steps, int self_steps)
 	else
 	{
 		route->a_direction = 1;
-		route->a_steps = steps;
+		(*route).a_steps = steps;
 	}
 	if (self_steps > (route->b_size / 2))
 	{
@@ -84,7 +84,20 @@ t_route	*fill_route(t_route *route, int steps, int self_steps)
 	else
 	{
 		route->b_direction = 1;
-		route->b_steps = self_steps;
+		(*route).b_steps = self_steps;
 	}
 	return (route);
+}
+
+void	free_routes(t_route **routes)
+{
+	int	i;
+
+	i = 0;
+	while (routes[i])
+	{
+		free(routes[i]);
+		i++;
+	}
+	free(routes);
 }

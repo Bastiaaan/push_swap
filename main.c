@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:03:50 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/30 15:34:24 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/03 21:36:54 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	valid_input(const char *arg)
 	while (arg[i])
 	{
 		cast = (int)arg[i];
-		if (!ft_isdigit(cast))
+		if (!ft_isdigit(cast) || cast >= 2147483647)
 			return (0);
 		i++;
 	}
@@ -66,7 +66,7 @@ t_list	*handlebigargv(char *argv)
 	{
 		if (valid_input(args[i]))
 		{
-			tmp = ft_lstnew((long)ft_atoi(args[i]));
+			tmp = ft_lstnew(ft_atoi(args[i]));
 			if (new == 0x0)
 				new = tmp;
 			else
@@ -92,12 +92,14 @@ t_list	*handleargv(char *argv[])
 		if (valid_input(argv[i]))
 		{
 			arg_cast = ft_atoi(argv[i]);
-			new = ft_lstnew((long)arg_cast);
+			new = ft_lstnew(arg_cast);
 			if (list == NULL)
 				list = new;
 			else
 				ft_lstadd_back(&list, new);
 		}
+		else
+			return (NULL);
 		i++;
 	}
 	return (list);
@@ -117,19 +119,14 @@ int	main(int argc, char *argv[])
 		list_a = handlebigargv(argv[1]);
 	else
 		list_a = handleargv(argv);
-	// if (!ft_lstunique(&list_a))
-	// {
-	// 	ft_printf("Error\n");
-	// 	return (1);
-	// }
+	if (!ft_lstunique(&list_a) || list_a == NULL)
+	{
+		ft_printf("Error\n");
+		return (1);
+	}
 	list_b = NULL;
 	set_rankings(list_a);
-	run(list_a, list_b);
+	run(&list_a, &list_b);
 	free_list(list_a);
 	return (0);
 }
-// testing already sorted list: 4 5 234 310 400 673 824
-// make re && ./push_swap.a 27052 2115 28406 25393 3780 34829 38903 7304 33672 20805 38466 46141 29931 40997 24240 27642 36607 8915 46758 39083 15256 44636 26895 2780 45849 16674 25857 24018 14041 44492 4175 14253 4573 18544 3320 112 1466 24509 44878 45155 14368 1164 19786 23046 35559 46178 15107 47244 30874 17841 -- normal test
-// make debug && gdb ./push_swap.test -- debug test with gdb47 5 89 16 53 71 8 94 30 61
-// ./push_swap.a 44865 39502 15069 29203 15669 44209 46919 10488 11505 1260 49016 30505 17437 35792 41863
-// descending B with smaller pb value: ./push_swap.a 33218 25885 40295 13935 48985 30463 10212 46638 1252 47686 11283 46066 17578 18514 35688 1767

@@ -6,13 +6,13 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 16:45:41 by brogaar           #+#    #+#             */
-/*   Updated: 2025/12/18 23:02:19 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/03 20:24:00 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(long content)
+t_list	*ft_lstnew(int content)
 {
 	t_list	*node;
 

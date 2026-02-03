@@ -6,66 +6,57 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:32:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/30 14:32:01 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/03 21:40:02 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_list	*clone(t_list *src)
+static int	get_direction(t_list *list)
 {
-	t_list	*new;
-	t_list	*dest;
 	t_list	*lst;
+	int		matches;
 
-	lst = src;
-	dest = NULL;
-	while (lst)
+	lst = list;
+	matches = 0;
+	while (lst != NULL)
 	{
-		new = ft_lstnew(lst->content);
-		new->rank = lst->rank;
-		if (dest == NULL)
-			dest = new;
+		if (lst->next != NULL
+			&& lst->content < lst->next->content)
+			matches++;
 		else
-			ft_lstadd_back(&dest, new);
+			break ;
 		lst = lst->next;
 	}
-	return (dest);
+	if (matches < (ft_lstsize(list) / 2))
+		return (1);
+	return (-1);
+}
+
+void	finalize(t_list **a)
+{
+	int	direction;
+
+	direction = get_direction((*a));
+	while (!ascending(*a))
+	{
+		if (direction > 0)
+			ra(a);
+		else
+			rra(a);
+	}
 }
 
 void	free_list(t_list *list)
 {
-	t_list	*lst;
 	t_list	*tmp;
 
-	lst = list;
-	while (lst)
+	while (list != NULL)
 	{
-		tmp = lst;
-		lst = lst->next;
+		tmp = list;
+		list = list->next;
 		free(tmp);
 	}
-}
-
-int	sort_complete(t_list *list, size_t original_size)
-{
-	t_list			*lst;
-	unsigned int	in;
-
-	lst = list;
-	in = 0;
-	if (ft_lstsize(list) < original_size)
-		return (0);
-	while (lst)
-	{
-		if (lst->next != NULL && lst->content > lst->next->content)
-			return (0);
-		lst = lst->next;
-		in++;
-	}
-	if (in < original_size)
-		return (0);
-	return (1);
 }
 
 void	display_list(t_list *list)

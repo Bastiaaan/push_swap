@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 11:18:41 by brogaar           #+#    #+#             */
-/*   Updated: 2026/01/12 21:04:11 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/03 20:27:43 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 typedef struct s_list
 {
-	long			content;
+	int				content;
 	struct s_list	*next;
 	unsigned int	rank;
 }					t_list;
@@ -65,7 +65,7 @@ void			ft_lstadd_back(t_list **lst, t_list *new);
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 int				ft_lstcontains(t_list **list, t_list *item);
 t_list			*ft_lstlast(t_list *lst);
-t_list			*ft_lstnew(long content);
+t_list			*ft_lstnew(int content);
 void			ft_lstpop(t_list *lst);
 int				ft_lstsize(t_list *lst);
 int				ft_lstunique(t_list **list);

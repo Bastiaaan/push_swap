@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/02/03 00:32:11 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/03 21:32:08 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,40 +29,19 @@ typedef struct s_route
 	int				b_steps;
 }	t_route;
 
-typedef struct s_instructions
-{
-	int				rot_a;
-	int				rot_b;
-	int				rev_a;
-	int				rev_b;
-	int				rr;
-	int				rrr;	
-}	t_instructions;
-
-typedef struct s_stack
-{
-	t_list*	top;
-	t_list*	min;
-	t_list*	max; //max->next = min;
-}	t_stack;
-
-// curr = min;
-// if (curr == max)
-//		break;
-// 'a' = rotate 'z' = reverse rotate 'A' = double rotate 'Z' = double reverse rotate
-
 // =========== Sort algorithm ============
 
-void		sort_stack(t_list *a, t_list *b, size_t size);
+void		sort_stack(t_list **a, t_list **b);
 void		mini_sort(t_list **a, t_list **b);
 void		execute_route(t_list **a, t_list **b, t_route route);
-int			calc_steps_pa(t_list *dest, t_list *elem);
-int			calc_exceed_pa(t_list *a);
 int			ascending(t_list *list);
-void		run(t_list *a, t_list *b);
-t_route		*init_route(t_list *node, t_list *target, size_t a_size, size_t b_size);
+int			optimal_place(t_list *a, t_list *b);
+void		run(t_list **a, t_list **b);
+void		finalize(t_list **a);
+t_route		*init_route(t_list *node, t_list *target, size_t a_s, size_t b_s);
 t_route		*fill_route(t_route *route, int steps, int self_steps);
 t_route		*get_shortest(t_route *route_1, t_route *route_2);
+void		free_routes(t_route **routes);
 
 // ========= Push-swap Functions =========
 
@@ -89,15 +68,10 @@ void		ss(t_list **list_a, t_list **list_b);
 
 // ======== additional functions =========
 
-t_list		*clone(t_list *src);
 void		set_rankings(t_list *list);
 void		display_list(t_list *list);
 int			exceed_largest(t_list *list, t_list *item);
 int			exceed_smallest(t_list *list, t_list *item);
-int			sort_complete(t_list *list, size_t original_size);
-int			calc_direction_pa(t_list *list, t_list *item);
-int			calc_direction_exceed(t_list *list);
-int			calc_direction_pa(t_list *a, t_list *src);
 void		free_list(t_list *list);
 
 #endif
