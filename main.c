@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 02:03:50 by brogaar           #+#    #+#             */
-/*   Updated: 2026/02/03 21:36:54 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/04 15:59:51 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int	main(int argc, char *argv[])
 	t_list	*list_a;
 	t_list	*list_b;
 
+	list_b = NULL;
 	if (argc <= 1)
 	{
 		ft_printf("Error\n");
@@ -124,7 +125,6 @@ int	main(int argc, char *argv[])
 		ft_printf("Error\n");
 		return (1);
 	}
-	list_b = NULL;
 	set_rankings(list_a);
 	run(&list_a, &list_b);
 	free_list(list_a);

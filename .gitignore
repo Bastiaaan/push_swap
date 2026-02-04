@@ -1,4 +1,5 @@
 *.o
+bonus/
 src/*.o
 libft/*.o
 ft_printf/*.o

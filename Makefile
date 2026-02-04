@@ -6,7 +6,7 @@
 #    By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/05 02:46:26 by brogaar           #+#    #+#              #
-#    Updated: 2026/02/03 17:46:00 by brogaar          ###   ########.fr        #
+#    Updated: 2026/02/04 19:21:35 by brogaar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,9 @@ LIBFT_PRINTF = $(FT_PRINTF_DIR)/libftprintf.a
 
 LIBFT_DIR = ./libft
 LIBFT  = $(LIBFT_DIR)/libft.a
+
+BONUS_NAME = checker
+BONUS_SRC = checker/main.c
 
 SRCS   = main.c \
 		 src/push_swap.c \
@@ -78,6 +81,7 @@ $(DEBUG_NAME): $(OBJS) $(LIBFT_PRINTF) $(LIBFT)
 	$(CC_DEBUG) $(CC_DEBUG_FLAG) -c $< -o $@
 	
 	@echo "$(BLD_PURPLE)$(DEBUG_NAME)$(RESET)$(PURPLE) is now ready$(RESET)"
+	
 clean:
 	$(MAKE) clean -C $(LIBFT_DIR)
 	$(MAKE) clean -C $(FT_PRINTF_DIR)
@@ -88,6 +92,7 @@ fclean: clean
 	$(MAKE) fclean -C $(FT_PRINTF_DIR)
 	rm -f $(NAME)
 	rm -f $(DEBUG_NAME)
+
 
 re: fclean all
 
