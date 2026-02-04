@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 08:57:36 by brogaar           #+#    #+#             */
-/*   Updated: 2026/02/03 21:38:07 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/04 09:07:43 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ static t_route	**get_routes(t_list **a, t_list **b, size_t a_s, size_t b_s)
 	{
 		la = *a;
 		moves_a = 0;
-		while (la && !pa_compatible(la, lb))
-			la = la->next, moves_a++;
+		calc_stack_a(&la, lb, &moves_a);
 		routes[moves_b] = init_route(lb, la, a_s, b_s);
 		routes[moves_b] = fill_route(routes[moves_b], moves_a, moves_b);
 		moves_b++;

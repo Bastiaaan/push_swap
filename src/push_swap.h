@@ -6,7 +6,7 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 01:59:15 by brogaar           #+#    #+#             */
-/*   Updated: 2026/02/03 21:32:08 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/04 09:06:45 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		mini_sort(t_list **a, t_list **b);
 void		execute_route(t_list **a, t_list **b, t_route route);
 int			ascending(t_list *list);
 int			optimal_place(t_list *a, t_list *b);
+void		calc_stack_a(t_list **a, t_list *src, int *moves_a);
 void		run(t_list **a, t_list **b);
 void		finalize(t_list **a);
 t_route		*init_route(t_list *node, t_list *target, size_t a_s, size_t b_s);

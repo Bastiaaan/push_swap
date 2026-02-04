@@ -6,11 +6,20 @@
 /*   By: brogaar <brogaar@student.codam.nl>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/28 14:00:33 by brogaar           #+#    #+#             */
-/*   Updated: 2026/02/03 18:07:56 by brogaar          ###   ########.fr       */
+/*   Updated: 2026/02/04 09:06:31 by brogaar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	calc_stack_a(t_list **a, t_list *src, int *moves_a)
+{
+	while (*a && !pa_compatible(*a, src))
+	{
+		(*moves_a)++;
+		*a = (*a)->next;
+	}
+}
 
 int	optimal_place(t_list *a, t_list *b)
 {
